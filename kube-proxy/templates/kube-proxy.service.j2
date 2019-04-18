@@ -1,0 +1,14 @@
+[Unit]
+Description=Kubernetes Kube Proxy
+Documentation=https://github.com/kubernetes/kubernetes
+
+[Service]
+ExecStart=/usr/bin/kube-proxy \
+    --config=/var/lib/kube-proxy/kube-proxy-config.yaml \
+    --master=https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }} \
+    --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

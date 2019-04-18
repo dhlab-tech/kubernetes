@@ -1,0 +1,11 @@
+---
+- name: Check if kube-apiserver binary already exists
+  stat:
+    path: "/usr/bin/kube-apiserver"
+  register: kubeapiserver
+- name: Download kube-apiserver binary
+  get_url:
+    url: "{{ kube_apiserver_url }}"
+    dest: "/usr/bin/kube-apiserver"
+    mode: 0755
+  when: not kubeapiserver.stat.exists

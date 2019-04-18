@@ -1,0 +1,16 @@
+---
+- name: Ensure policies configuration
+  template:
+    src: policy.json.j2
+    dest: /etc/containers/policy.json
+    mode: 0644
+- name: Ensure seccomp config
+  template:
+    src: seccomp.json.j2
+    dest: /etc/crio/seccomp.json
+    mode: 0644
+- name: Ensure crictl config
+  template:
+    src: crictl.yaml.j2
+    dest: /etc/crictl.yaml
+    mode: 0644

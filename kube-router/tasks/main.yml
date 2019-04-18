@@ -1,0 +1,7 @@
+  - name: Ensure kuberouter config
+    template:
+      src: kuberouter.manifest.j2
+      dest: "/var/tmp/kuberouter.yaml"
+      mode: 0644
+  - name: Apply kuberouter config
+    command: kubectl apply -f /var/tmp/kuberouter.yaml

@@ -1,0 +1,43 @@
+- name: Enable OverlayFS kernel module
+  import_tasks: enable_overlay_fs_kernel.yml
+  tags: ['enable_overaly_fs_kernel']
+
+- name: Install CNI binaries
+  import_tasks: install_cni_binaries.yml
+  tags: ['install_cni_binaries']
+
+- name: Install prerequisites for crio build
+  import_tasks: install_crio_dependencies.yml
+  tags: ['install_crio_dependencies']
+
+- name: Build CRI-O binaries
+  import_tasks: build_crio_binaries.yml
+  tags: ['build_crio_binaries']
+
+- name: Install CRI-O binaries
+  import_tasks: install_crio_binaries.yml
+  tags: ['install_crio_binaries']
+
+- name: Download runc binary
+  import_tasks: download_runc.yml
+  tags: ['download_runc']
+
+- name: Download crictl binary
+  import_tasks: download_crictl.yml
+  tags: ['download_crictl']
+
+- name: Create crio.conf
+  import_tasks: create_crio_conf.yml
+  tags: ['create_crio_conf']
+
+- name: Create crio directories
+  import_tasks: create_crio_directories.yml
+  tags: ['create_crio_directories']
+
+- name: Ensure config
+  import_tasks: ensure_config.yml
+  tags: ['ensure_config']
+
+- name: Ensure systemd crio unit
+  import_tasks: ensure_systemd_crio_unit.yml
+  tags: ['ensure_systemd_crio_unit']

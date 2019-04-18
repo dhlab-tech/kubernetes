@@ -1,0 +1,27 @@
+---
+- name: Install prerequisites for crio build
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+    - btrfs-tools
+    - containers-common
+    - git
+    - golang-go
+    - libassuan-dev
+    - libdevmapper-dev
+    - libglib2.0-dev
+    - libc6-dev
+    - libgpgme11
+    - libgpgme11-dev
+    - libgpg-error-dev
+    - libseccomp-dev
+    - libsystemd-dev
+    - libselinux1-dev
+    - pkg-config
+    - go-md2man
+    - make
+    - gcc
+    - libostree-dev

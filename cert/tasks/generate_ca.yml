@@ -1,0 +1,21 @@
+---
+- name: Check if ca cert already exists
+  stat:
+    path: "{{ certdir }}/ca.pem"
+  register: ca
+- name: Generate config and csr for ca
+  template:
+    src: "{{ item }}.json.j2"
+    dest: "{{ certdir }}/{{ item }}.json"
+    mode: 0644
+  with_items:
+    - ca-config
+    - ca-csr
+  when: not ca.stat.exists
+- name: Generate ca keys
+  shell:
+    cmd: |
+      cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+  args:
+    chdir: "{{ certdir }}"
+  when: not ca.stat.exists

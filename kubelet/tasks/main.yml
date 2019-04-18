@@ -1,0 +1,43 @@
+  - name: Check if kubelet binary already installed
+    stat:
+      path: /usr/bin/kubelet
+    register: kubelet
+  - name: Download kubelet binary
+    get_url:
+      url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubelet"
+      dest: /usr/bin/kubelet
+      mode: 0755
+    when: not kubelet.stat.exists
+  - name: "Create kubernetes dirs if not exist"
+    file:
+      path: "{{ item }}"
+      state: directory
+    with_items:
+        - "{{ cni_conf_dir }}"
+  - name: Ensure kubelet env vars
+    template:
+      src: kubelet.env.j2
+      dest: /etc/kubernetes/kubelet.env
+      mode: 0644
+  - name: Ensure kuberouter config
+    template:
+      src: 10-kuberouter.conf.j2
+      dest: "{{ cni_conf_dir }}/10-kuberouter.conf"
+      mode: 0644
+  - name: Ensure flannel config
+    template:
+      src: 10-flannel.conf.j2
+      dest: "{{ cni_conf_dir }}/10-flannel.conf"
+      mode: 0644
+  - name: Ensure systemd unit file for kubelet
+    template:
+      src: kubelet.service.j2
+      dest: /lib/systemd/system/kubelet.service
+      mode: 0644
+  - name: Ensure kubelet systemd service
+    systemd:
+      name: kubelet
+      state: restarted
+      daemon_reload: yes
+      enabled: yes
+

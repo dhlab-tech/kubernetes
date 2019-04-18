@@ -1,0 +1,11 @@
+---
+- name: Ensure coreDNS config
+  template:
+    src: "coredns.yaml.j2"
+    dest: "/var/tmp/coredns.yaml"
+    mode: 0644
+  run_once: True
+
+- name: Apply coreDNS
+  shell: kubectl apply -f /var/tmp/coredns.yaml
+  run_once: True

@@ -1,0 +1,39 @@
+---
+- name: Generate csrs for nodes
+  template:
+    src: "node-csr.json.j2"
+    dest: "{{ certdir }}/{{ kubenode }}-csr.json"
+    mode: 0644
+  loop: "{{ groups['kubenodes'] }}"
+  loop_control:
+    loop_var: kubenode
+
+- name: Initialize nodes exclusion facts
+  set_fact:
+    nodes_to_exclude: []
+- name: Find existed node keys
+  find:
+    paths: "{{ certdir }}"
+    patterns: '(?!^.+-key\.pem$)(^(?!admin)(?!ca).+.pem$)'
+    use_regex: yes
+  register: nodekeys
+- name: Find nodes with keys
+  set_fact:
+    nodes_to_exclude: "{{  nodes_to_exclude  }} + [ '{{ item[0] }}' ]"
+  with_nested:
+    - "{{ groups['kubenodes'] }}"
+    - "{{ nodekeys.files }}"
+  when: "certdir+'/'+item[0]+'.pem' == item[1].path"
+- name: List hosts to generate certs
+  set_fact:
+    nodes_to_generate: "{{  groups['kubenodes'] | difference(nodes_to_exclude) }}"
+
+- name: Generate node keys
+  shell:
+    cmd: |
+      cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
+          -hostname={{ item }},{{ hostvars[item].ansible_ssh_host }} \
+          -profile=kubernetes {{ item }}-csr.json | cfssljson -bare {{ item }}
+  args:
+    chdir: "{{ certdir }}"
+  with_items: "{{ nodes_to_generate }}"

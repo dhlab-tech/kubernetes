@@ -1,0 +1,48 @@
+---
+- name: Create certs directories
+  import_tasks: create_certs_directories.yml
+  tags: ['create_certs_directories']
+
+- name: Install CFSSL if not installed
+  import_tasks: install_cfssl.yml
+  tags: ['install_cfssl']
+
+- name: Install CFSSLjson if not installed
+  import_tasks: install_cfssljson.yml
+  tags: ['install_cfssljson']
+
+- name: Generate ca certs
+  import_tasks: generate_ca.yml
+  tags: ['generate_ca']
+
+- name: Generate api certs
+  import_tasks: generate_kube_api.yml
+  tags: ['generate_kube_api']
+
+- name: Generate proxy cert
+  import_tasks: generate_kube_proxy.yml
+  tags: ['generate_kube_proxy']
+
+- name: Generate encription config
+  import_tasks: generate_encryption_key.yml
+  tags: ['generate_encryption_key']
+
+- name: Generate certs for masters
+  import_tasks: generate_masters_certs.yml
+  tags: ['generate_masters_certs']
+
+- name: Generate certs for nodes
+  import_tasks: generate_nodes_certs.yml
+  tags: ['generate_nodes_certs']
+
+- name: Copy certs to etcds
+  import_tasks: copy_certs_etcd.yml
+  tags: ['copy_certs_etcd']
+
+- name: Copy certs to masters
+  import_tasks: copy_certs_masters.yml
+  tags: ['copy_certs_masters']
+
+- name: Copy certs to nodes
+  import_tasks: copy_certs_nodes.yml
+  tags: ['copy_certs_nodes']

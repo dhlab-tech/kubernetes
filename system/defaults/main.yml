@@ -1,0 +1,7 @@
+---
+kube_dir: "/etc/kubernetes"
+kube_cert_dir: "/etc/kubernetes/ssl"
+etcd_dir: "/etc/etcd"
+etcd_data_dir: "/var/lib/etcd"
+cni_conf_dir: "/etc/cni/net.d"
+cni_bin_dir: "/opt/cni/bin"

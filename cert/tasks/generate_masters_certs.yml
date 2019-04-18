@@ -1,0 +1,34 @@
+---
+- name: Generate csr for masters
+  template:
+    src: "admin-csr.json.j2"
+    dest: "{{ certdir }}/admin-csr.json"
+    mode: 0644
+
+- name: Initialize masters exclusion facts
+  set_fact:
+    masters_to_exclude: []
+- name: Find existed admin keys
+  find:
+    paths: "{{ certdir }}"
+    patterns: '(?!^admin-.+key\.pem)(^admin-.+pem)'
+    use_regex: yes
+  register: adminkeys
+- name: Find masters with keys
+  set_fact:
+    masters_to_exclude: "{{  masters_to_exclude  }} + [ '{{ item[0] }}' ]"
+  with_nested:
+    - "{{ groups['kubemasters'] }}"
+    - "{{ adminkeys.files }}"
+  when: "certdir+'/admin-'+item[0]+'.pem' == item[1].path"
+- name: List hosts to generate certs
+  set_fact:
+    masters_to_generate: "{{  groups['kubemasters'] | difference(masters_to_exclude) }}"
+
+- name: Generate master keys
+  shell:
+    cmd: |
+      cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin-{{ item }}
+  args:
+    chdir: "{{ certdir }}"
+  with_items: "{{ masters_to_generate }}"

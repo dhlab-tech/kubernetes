@@ -1,0 +1,9 @@
+- name: Create etcd dir if not exists
+  file:
+    path: "{{ etcd_dir }}"
+    state: directory
+
+- name: Create etcd data dir if not exists
+  file:
+    path: "{{ etcd_data_dir }}"
+    state: directory

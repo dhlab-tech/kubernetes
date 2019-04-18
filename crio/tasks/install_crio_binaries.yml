@@ -1,0 +1,33 @@
+---
+- name: Check if conmon binary already installed
+  stat:
+    path: /usr/local/libexec/crio/conmon
+  register: conmon
+- name: Copy conmon binary
+  copy:
+    src: "{{ build_crio_dir }}/bin/conmon"
+    dest: /usr/local/libexec/crio/conmon
+    mode: 0755
+  when: not conmon.stat.exists
+
+- name: Check if pause binary already installed
+  stat:
+    path: /usr/local/libexec/crio/pause
+  register: pause
+- name: Copy pause binary
+  copy:
+    src: "{{ build_crio_dir }}/bin/pause"
+    dest: /usr/local/libexec/crio/pause
+    mode: 0755
+  when: not pause.stat.exists
+
+- name: Check if crio already installed
+  stat:
+    path: /usr/local/bin/crio
+  register: crio
+- name: Copy crio binary
+  copy:
+    src: "{{ build_crio_dir }}/bin/crio"
+    dest: /usr/local/bin/crio
+    mode: 0755
+  when: not crio.stat.exists

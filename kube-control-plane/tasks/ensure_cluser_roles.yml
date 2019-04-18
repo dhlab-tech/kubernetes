@@ -1,0 +1,20 @@
+---
+- name: Ensure cluster roles config
+  template:
+    src: "clusterrole.yaml.j2"
+    dest: "/var/tmp/clusterrole.yaml"
+    mode: 0644
+  run_once: True
+- name: Ensure cluster roles binding
+  template:
+    src: "clusterrolebinding.yaml.j2"
+    dest: "/var/tmp/clusterrolebinding.yaml"
+    mode: 0644
+  run_once: True
+
+- name: Apply cluster roles
+  shell: kubectl apply -f /var/tmp/clusterrole.yaml
+  run_once: True
+- name: Apply roles binding
+  shell: kubectl apply -f /var/tmp/clusterrolebinding.yaml
+  run_once: True

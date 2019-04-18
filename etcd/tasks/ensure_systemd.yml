@@ -1,0 +1,13 @@
+- name: Ensure ETCD systemd unit
+  template:
+    src: etcd.service.j2
+    dest: /lib/systemd/system/etcd.service
+    mode: 0644
+
+- name: Ensure systemd ETCD service
+  systemd:
+    name: etcd
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+

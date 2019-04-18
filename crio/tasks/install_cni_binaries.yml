@@ -1,0 +1,21 @@
+---
+- name: Check CNI binaries already exists
+  stat:
+    path: "{{ cni_bin_dir }}/loopback"
+  register: cni
+
+- name: Create CNI dirs if not exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+      - "{{ cni_bin_dir }}"
+      - "{{ cni_conf_dir }}"
+
+- name: Download CNI binaries
+  unarchive:
+    src: "{{ cni_bin_url }}"
+    dest: "{{ cni_bin_dir }}"
+    remote_src: yes
+    mode: 0755
+  when: not cni.stat.exists

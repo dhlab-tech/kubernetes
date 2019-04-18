@@ -1,0 +1,5 @@
+cluster_name: "k8s.test"
+kube_pod_addresses: 10.22.0.0/16
+kube_apiserver_ip: 8.8.8.8
+kube_apiserver_port: 6443
+local_asn: 64999

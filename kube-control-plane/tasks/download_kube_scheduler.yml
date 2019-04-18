@@ -1,0 +1,11 @@
+---
+- name: Check if kube-scheduler binary already exists
+  stat:
+    path: "/usr/bin/kube-scheduler"
+  register: kubescheduler
+- name: Download kube-scheduler binary
+  get_url:
+    url:  "{{ kube_scheduler_url }}"
+    dest: "/usr/bin/kube-scheduler"
+    mode: 0755
+  when: not kubescheduler.stat.exists

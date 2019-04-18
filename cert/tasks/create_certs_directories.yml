@@ -1,0 +1,5 @@
+---
+- name: Ensure certdir if not exists
+  file:
+    path: "{{ certdir }}"
+    state: directory

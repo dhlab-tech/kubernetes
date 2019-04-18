@@ -1,0 +1,23 @@
+---
+- name: Get list of files to copy on masters
+  find:
+    paths: "{{ certdir }}"
+    patterns: '^.+.pem$'
+    use_regex: yes
+  register: masterfiles
+- name: Copy all pem files to masters
+  copy:
+    src: "{{ item[1].path }}"
+    dest: "{{ kube_cert_dir }}"
+    force: "{{ forcekeys | default('no') }}"
+  delegate_to: "{{ item[0] }}"
+  with_nested:
+    - "{{ groups['kubemasters'] }}"
+    - "{{ masterfiles.files }}"
+- name: Copy encryption-config.yaml to masters
+  copy:
+    src: "{{ certdir }}/encryption-config.yaml"
+    dest: "{{ kube_dir }}"
+    force: "{{ forcekeys | default('no') }}"
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups['kubemasters'] }}"

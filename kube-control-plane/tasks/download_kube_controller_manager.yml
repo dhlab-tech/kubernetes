@@ -1,0 +1,11 @@
+---
+- name: Check if kube-controller-manager binary already exists
+  stat:
+    path: "/usr/bin/kube-controller-manager"
+  register: kubecontrollermanager
+- name: Download kube-controller-manager binary
+  get_url:
+    url: "{{ kube_controller_manager_url }}"
+    dest: "/usr/bin/kube-controller-manager"
+    mode: 0755
+  when: not kubecontrollermanager.stat.exists

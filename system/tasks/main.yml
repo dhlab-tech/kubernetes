@@ -1,0 +1,17 @@
+- name: Add all hosts from inventory to /etc/hosts
+  lineinfile:
+    dest: "/etc/hosts"
+    regexp: "^.+ {{ item }}$"
+    line: "{{ hostvars[item].ansible_ssh_host }} {{  item  }}"
+  with_items: "{{  groups['kubemasters'] | union(groups['kubenodes']) | union(groups['etcd']) | unique  }}"
+- name: Create necessary dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+     - "{{ kube_dir }}"
+     - "{{ kube_cert_dir }}"
+     - "{{ etcd_dir }}"
+     - "{{ etcd_data_dir }}"
+     - "{{ cni_conf_dir }}"
+     - "{{ cni_bin_dir }}"

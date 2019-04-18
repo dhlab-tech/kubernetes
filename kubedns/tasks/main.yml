@@ -1,0 +1,11 @@
+---
+- name: Ensure kubeDNS config
+  template:
+    src: "kubedns.yaml.j2"
+    dest: "/var/tmp/kubedns.yaml"
+    mode: 0644
+  run_once: True
+
+- name: Apply kubeDNS
+  shell: kubectl apply -f /var/tmp/kubedns.yaml
+  run_once: True

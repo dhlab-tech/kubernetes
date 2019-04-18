@@ -1,0 +1,16 @@
+# dirs
+cni_conf_dir: "/etc/cni/net.d"
+cni_bin_dir: "/opt/cni/bin"
+build_crio_dir: "/tmp/crio_src_{{ crio_version }}"
+
+# version
+runc_version: "v1.0.0-rc5"
+crictl_version: "v1.13.0"
+crio_version: "v1.13.4"
+cni_version: "v0.6.0"
+
+# urls
+crio_src_url: "https://github.com/cri-o/cri-o/archive/{{ crio_version }}.tar.gz"
+crictl_bin_url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ crictl_version }}/crictl-{{ crictl_version }}-linux-amd64.tar.gz"
+runc_bin_url: "https://github.com/opencontainers/runc/releases/download/{{ runc_version }}/runc.amd64"
+cni_bin_url: "https://github.com/containernetworking/cni/releases/download/{{ cni_version }}/cni-amd64-{{ cni_version }}.tgz"

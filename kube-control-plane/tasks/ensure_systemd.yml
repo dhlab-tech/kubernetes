@@ -1,0 +1,27 @@
+---
+- name: Ensure systemd apiserver service
+  template:
+    src: "kube-apiserver.service.j2"
+    dest: "/lib/systemd/system/kube-apiserver.service"
+    mode: 0644
+- name: Ensure systemd controller manager service
+  template:
+    src: "kube-controller-manager.service.j2"
+    dest: "/lib/systemd/system/kube-controller-manager.service"
+    mode: 0644
+- name: Ensure systemd scheduler service
+  template:
+    src: "kube-scheduler.service.j2"
+    dest: "/lib/systemd/system/kube-scheduler.service"
+    mode: 0644
+
+- name: Ensure systemd services
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  loop:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler

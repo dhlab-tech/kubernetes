@@ -1,0 +1,31 @@
+- name: Download kube-apiserver
+  import_tasks: download_kube_apiserver.yml
+  tags: ['download_kube_apiserver']
+
+- name: Download kube-scheduler
+  import_tasks: download_kube_scheduler.yml
+  tags: ['download_kube_scheduler']
+
+- name: Download kube-controller-manager
+  import_tasks: download_kube_controller_manager.yml
+  tags: ['download_kube_controller-manager']
+
+- name: Ensure direcotries
+  import_tasks: ensure_directories.yml
+  tags: ['ensure_directories']
+
+- name: Ensure token file
+  import_tasks: ensure_token_file.yml
+  tags: ['ensure_token_file']
+
+- name: Ensure systemd files
+  import_tasks: ensure_systemd.yml
+  tags: ['ensure_systemd']
+
+- name: sleep for 20 seconds and continue with play
+  wait_for: timeout=20
+  run_once: True
+
+- name: Ensure cluster roles and binding files
+  import_tasks: ensure_cluser_roles.yml
+  tags: ['ensure_cluser_roles']

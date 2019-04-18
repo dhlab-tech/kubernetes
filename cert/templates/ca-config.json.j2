@@ -1,0 +1,13 @@
+{
+  "signing": {
+    "default": {
+      "expiry": "{{ ca_config_signing_default_expiry }}"
+    },
+    "profiles": {
+      "kubernetes": {
+        "usages": ["signing", "key encipherment", "server auth", "client auth"],
+        "expiry": "{{ ca_config_signing_profile_kubernetes_expiry }}"
+      }
+    }
+  }
+}

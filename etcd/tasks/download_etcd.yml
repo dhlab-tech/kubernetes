@@ -1,0 +1,11 @@
+- name: Check if etcd binary already exists
+  stat:
+    path: /usr/bin/etcd
+  register: etcd
+
+- name: Download etcd and etcdclt binary
+  unarchive:
+    src: "{{ etcd_url }}"
+    dest: /usr/bin
+    mode: 0755
+  when: not etcd.stat.exists

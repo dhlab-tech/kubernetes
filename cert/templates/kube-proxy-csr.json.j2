@@ -1,0 +1,16 @@
+{
+  "CN": "{{ kube_proxy_csr_cn }}",
+  "key": {
+    "algo": "{{ kube_proxy_csr_key_algo }}",
+    "size": {{ kube_proxy_csr_key_size }}
+  },
+  "names": [
+    {
+      "C": "{{ kube_proxy_csr_names_c }}",
+      "L": "{{ kube_proxy_csr_names_l }}",
+      "O": "{{ kube_proxy_csr_names_o }}",
+      "OU": "{{ kube_proxy_csr_names_ou }}",
+      "ST": "{{ kube_proxy_csr_names_st }}"
+    }
+  ]
+}

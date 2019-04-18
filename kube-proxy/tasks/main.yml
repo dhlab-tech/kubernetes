@@ -1,0 +1,36 @@
+- name: Check if kube-proxy binary already installed
+  stat:
+    path: "/usr/bin/kube-proxy"
+  register: kubeproxy
+- name: Download kube-proxy binary
+  get_url:
+    url: "{{ kube_proxy_url }}"
+    dest: "/usr/bin/kube-proxy"
+    mode: 0755
+  when: not kubeproxy.stat.exists
+- name: "Create kube-proxy dirs if not exist"
+  file:
+    path: "/var/lib/kube-proxy"
+    state: directory
+- name: Ensure kubeproxy kubeconfig
+  copy:
+    src: "/etc/kubernetes/kube-proxy.kubeconfig"
+    dest: "/var/lib/kube-proxy/kubeconfig"
+    remote_src: yes
+- name: Ensure kubeproxy config
+  template:
+    src: "kube-proxy.conf.j2"
+    dest: "/var/lib/kube-proxy/kube-proxy-config.yaml"
+    mode: 0644
+- name: Ensure kube-proxy systemd unit file
+  template:
+    src: "kube-proxy.service.j2"
+    dest: "/lib/systemd/system/kube-proxy.service"
+    mode: 0644
+- name: Ensure systemd kube-proxy service
+  systemd:
+    name: kube-proxy
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+

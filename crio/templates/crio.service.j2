@@ -1,0 +1,13 @@
+[Unit]
+Description=OCI-based implementation of Kubernetes Container Runtime Interface
+Documentation=https://github.com/kubernetes-incubator/cri-o
+Requires=network.target
+
+[Service]
+ExecStartPre=/bin/sleep 10
+ExecStart=/usr/local/bin/crio --storage-driver=overlay2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

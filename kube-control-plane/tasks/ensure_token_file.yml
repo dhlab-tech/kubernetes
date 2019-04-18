@@ -1,0 +1,7 @@
+---
+- name: Ensure token file
+  template:
+    src: token.auth.j2
+    dest: "{{ kube_dir }}/token.auth"
+    mode: 0644
+    force: no
