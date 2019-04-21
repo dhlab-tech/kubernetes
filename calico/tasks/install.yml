@@ -1,0 +1,19 @@
+---
+- name: Ensure temporary directory to store data files
+  tempfile:
+    state: directory
+    suffix: calico
+  register: workdir
+
+- name: Get latest Calico networking manifest
+  get_url:
+    url: "https://docs.projectcalico.org/v{{ calico_version }}/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml"
+    dest: "{{ workdir.path }}/calico.yaml"
+
+- name: Change pod CIDR
+  command: 'sed -i -e "s:192.168.0.0/16:{{ pod_cidr }}:g" {{ workdir.path }}/calico.yaml'
+  when: pod_cidr != '192.168.0.0/16'
+
+- name: Apply Calico definition on k8s
+  command: 'kubectl -f apply {{ workdir.path }}/calico.yaml'
+

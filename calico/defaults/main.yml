@@ -1,0 +1,7 @@
+---
+# Mode to work. Allowed: iptables, ipvs
+kubeproxy_mode: iptables
+policy: yes
+networking: yes
+pod_cidr: 192.168.0.0/16
+calico_version: 3.6

@@ -1,0 +1,9 @@
+---
+- name: Calico | Pre-checks
+  import_tasks: prechecks.yml
+
+- name: Calico | Installation
+  import_tasks: install.yml
+
+- name: Calico | Post-install
+  import_tasks: postinstall.yml
