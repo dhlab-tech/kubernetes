@@ -1,0 +1,5 @@
+---
+- name: Check for kubeproxy mode
+  fail:
+    msg: "Use iptables or ipvs as kubeproxy mode"
+  when: kubeproxy_mode not in ['iptables', 'ipvs']

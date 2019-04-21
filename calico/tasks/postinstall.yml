@@ -1,0 +1,5 @@
+---
+- name: Remove temporary directory
+  file:
+    state: absent
+    path: "{{ workdir.path }}"
