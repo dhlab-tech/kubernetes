@@ -1,4 +1,3 @@
----
 kube_dir: "/etc/kubernetes"
 kube_cert_dir: "/etc/kubernetes/ssl"
 etcd_dir: "/etc/etcd"
