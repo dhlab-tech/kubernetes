@@ -1,0 +1,6 @@
+---
+- name: Ensure kuberouter config
+  template:
+    src: 10-kuberouter.conf.j2
+    dest: "{{ cni_conf_dir }}/10-kuberouter.conf"
+    mode: 0644

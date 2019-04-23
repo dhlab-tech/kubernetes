@@ -1,0 +1,11 @@
+---
+- name: Check if kubelet binary already installed
+  stat:
+    path: /usr/bin/kubelet
+  register: kubelet
+- name: Download kubelet binary
+  get_url:
+    url: "{{ kubelet_url }}"
+    dest: /usr/bin/kubelet
+    mode: 0755
+  when: not kubelet.stat.exists

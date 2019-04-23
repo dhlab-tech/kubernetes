@@ -1,0 +1,6 @@
+---
+- name: Ensure flannel config
+  template:
+    src: 10-flannel.conf.j2
+    dest: "{{ cni_conf_dir }}/10-flannel.conf"
+    mode: 0644

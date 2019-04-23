@@ -9,3 +9,4 @@ kube_apiserver_ip: 8.8.8.8
 kube_apiserver_port: 6443
 kube_version: "1.13.3"
 kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubelet"
+cni: "calico"
