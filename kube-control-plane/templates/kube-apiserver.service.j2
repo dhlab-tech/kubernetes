@@ -5,7 +5,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/bin/kube-apiserver \
   --enable-admission-plugins=Initializers,NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
-  --advertise-address={{ ansible_ssh_host }} \
+  --advertise-address={{ ansible_default_ipv4.address }} \
   --allow-privileged=true \
   --apiserver-count={{ groups['kubemasters'] | length }} \
   --authorization-mode=Node,RBAC \
@@ -14,7 +14,7 @@ ExecStart=/usr/bin/kube-apiserver \
   --etcd-cafile={{ kube_cert_dir }}/ca.pem \
   --etcd-certfile={{ kube_cert_dir }}/kubernetes.pem \
   --etcd-keyfile={{ kube_cert_dir }}/kubernetes-key.pem \
-  --etcd-servers={% for member in groups['etcd'] %}https://{{ hostvars[member].ansible_ssh_host }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
+  --etcd-servers={% for member in groups['etcd'] %}https://{{ hostvars[member].ansible_default_ipv4.address }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
   --event-ttl=1h \
   --encryption-provider-config={{ kube_dir }}/encryption-config.yaml \
   --insecure-bind-address=127.0.0.1 \

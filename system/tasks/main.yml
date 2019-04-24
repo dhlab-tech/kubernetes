@@ -2,7 +2,7 @@
   lineinfile:
     dest: "/etc/hosts"
     regexp: "^.+ {{ item }}$"
-    line: "{{ hostvars[item].ansible_ssh_host }} {{  item  }}"
+    line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{  item  }}"
   with_items: "{{  groups['kubemasters'] | union(groups['kubenodes']) | union(groups['etcd']) | unique  }}"
 - name: Create necessary dirs
   file:
