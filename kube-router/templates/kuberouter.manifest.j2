@@ -20,7 +20,7 @@ data:
   kubeconfig: |
     apiVersion: v1
     kind: Config
-    clusterCIDR: "{{ kube_pod_addresses }}"
+    clusterCIDR: "{{ pod_cidr }}"
     clusters:
     - name: {{ cluster_name }}
       cluster:
@@ -68,7 +68,7 @@ spec:
         - "--run-service-proxy=true"
         - "--master=https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }}"
         - "--kubeconfig=/var/lib/kube-router/kubeconfig"
-        - "--cluster-cidr={{ kube_pod_addresses }}"
+        - "--cluster-cidr={{ pod_cidr }}"
         - "--cluster-asn={{ local_asn }}"
         - "--advertise-cluster-ip"
         - "--metrics-port=8080"
