@@ -1,5 +1,8 @@
 kube_version: "1.13.3"
 kube_proxy_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kube-proxy"
-kube_pod_addresses: 10.22.0.0/16
+pod_cidr: 192.168.0.0/16
 kube_apiserver_ip: 8.8.8.8
 kube_apiserver_port: 6443
+cluster_name: "k8s.test"
+kube_dir: "/etc/kubernetes"
+kube_cert_dir: "/etc/kubernetes/ssl"

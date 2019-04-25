@@ -1,0 +1,12 @@
+cluster_name: "k8s.test"
+kube_dir: "/etc/kubernetes"
+kube_cert_dir: "/etc/kubernetes/ssl"
+dns_ip_addr: 10.20.112.10
+dns_domain: "{{ cluster_name }}"
+cni_conf_dir: "/etc/cni/net.d"
+cni_bin_dir: "/opt/cni/bin"
+kube_apiserver_ip: 8.8.8.8
+kube_apiserver_port: 6443
+kube_version: "1.13.3"
+kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubelet"
+cni: "calico"

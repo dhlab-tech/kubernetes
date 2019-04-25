@@ -8,15 +8,34 @@
     dest: "/usr/bin/kube-proxy"
     mode: 0755
   when: not kubeproxy.stat.exists
-- name: "Create kube-proxy dirs if not exist"
-  file:
-    path: "/var/lib/kube-proxy"
-    state: directory
+- name: Set kubeproxy
+  shell: "kubectl config set-cluster {{ cluster_name }} \
+          --certificate-authority={{ kube_cert_dir }}/ca.pem \
+          --embed-certs=true \
+          --server=https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }} \
+          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+- name: Set kubeproxy credentials
+  shell: "kubectl config set-credentials kube-proxy \
+          --client-certificate={{ kube_cert_dir }}/kube-proxy.pem \
+          --client-key={{ kube_cert_dir }}/kube-proxy-key.pem \
+          --embed-certs=true \
+          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+- name: Set context for kubeproxy
+  shell: "kubectl config set-context default \
+          --cluster={{ cluster_name }} \
+          --user=kube-proxy \
+          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+- name: Ensure default context for kubeproxy
+  shell: "kubectl config use-context default --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
 - name: Ensure kubeproxy kubeconfig
   copy:
     src: "/etc/kubernetes/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig"
     remote_src: yes
+- name: "Create kube-proxy dirs if not exist"
+  file:
+    path: "/var/lib/kube-proxy"
+    state: directory
 - name: Ensure kubeproxy config
   template:
     src: "kube-proxy.conf.j2"

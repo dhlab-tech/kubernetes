@@ -6,6 +6,6 @@ kube_scheduler_url: "https://storage.googleapis.com/kubernetes-release/release/v
 kube_cert_dir: "/etc/kubernetes/ssl"
 kube_service_addresses: 10.20.112.0/20
 node_port_range: "30000-32767"
-kube_pod_addresses: 10.22.0.0/16
+pod_cidr: 192.168.0.0/16
 node_cidr_mask_size: 23
 cluster_name: "k8s.test"

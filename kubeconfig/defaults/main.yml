@@ -1,5 +1,0 @@
-cluster_name: "k8s.test"
-kube_dir: "/etc/kubernetes"
-kube_cert_dir: "/etc/kubernetes/ssl"
-kube_apiserver_ip: 8.8.8.8
-kube_apiserver_port: 6443
