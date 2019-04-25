@@ -1,8 +1,9 @@
 ---
 - name: Ensure tmp dir
-  file:
-    path: "/var/tmp"
+  tempfile:
     state: directory
+    suffix: kube-control-plane
+  register: kube-control-plane-workdir
 - name: Ensure k8s dir
   file:
     path: "{{ kube_dir }}"
