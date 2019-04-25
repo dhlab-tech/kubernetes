@@ -16,9 +16,14 @@
     dest: "{{ certdir }}/kubernetes-csr.json"
     mode: 0644
   when: not api.stat.exists
+
 - name: Generate kube-api keys
   shell: 
-    cmd: cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},{{ api_ips }},127.0.0.1,kubernetes.default,{{ cluster_name }} -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
+    cmd: |
+      cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
+        -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},127.0.0.1,kubernetes.default,{{ cluster_name }} \
+        -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
   args:
     chdir: "{{ certdir }}"
+    creates: "{{ certdir }}/kubernetes.pem"
   when: not api.stat.exists

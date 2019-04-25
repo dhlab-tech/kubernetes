@@ -32,7 +32,7 @@
   shell:
     cmd: |
       cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
-          -hostname={{ item }},{{ hostvars[item]['ansible_default_ipv4']['address']}} \
+          -hostname={{ item }},{{ hostvars[item]['ansible_default_ipv4']['address'] }} \
           -profile=kubernetes {{ item }}-csr.json | cfssljson -bare {{ item }}
   args:
     chdir: "{{ certdir }}"

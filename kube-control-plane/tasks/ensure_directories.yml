@@ -7,3 +7,7 @@
   file:
     path: "{{ kube_dir }}"
     state: directory
+- name: Ensure user systemd 
+  file:
+    path: "/usr/lib/systemd/system"
+    state: directory

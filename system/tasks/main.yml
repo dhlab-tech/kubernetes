@@ -8,6 +8,7 @@
   file:
     path: "{{ item }}"
     state: directory
+    mode: 0755
   with_items:
      - "{{ kube_dir }}"
      - "{{ kube_cert_dir }}"
