@@ -3,29 +3,19 @@
   copy:
     src: "{{ certdir }}/ca.pem"
     dest: "{{ kube_cert_dir }}"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['kubenodes'] }}"
 - name: Copy kube-proxy.pem to nodes
   copy:
     src: "{{ certdir }}/kube-proxy.pem"
     dest: "{{ kube_cert_dir }}"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['kubenodes'] }}"
 - name: Copy kube-proxy-key.pem to nodes
   copy:
     src: "{{ certdir }}/kube-proxy-key.pem"
     dest: "{{ kube_cert_dir }}"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['kubenodes'] }}"
 - name: Copy node specific files to nodes
   copy:
-    src: "{{ certdir }}/{{ item[0] }}{{ item[1] }}"
+    src: "{{ certdir }}/{{ inventory_hostname }}-key.pem"
     dest: "{{ kube_cert_dir }}"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item[0] }}"
-  with_nested:
-    - "{{ groups['kubenodes'] }}"
-    - [ "-key.pem",".pem"]
+- name: Copy node specific files to nodes
+  copy:
+    src: "{{ certdir }}/{{ inventory_hostname }}.pem"
+    dest: "{{ kube_cert_dir }}"
