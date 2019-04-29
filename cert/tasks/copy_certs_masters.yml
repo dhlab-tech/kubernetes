@@ -3,6 +3,11 @@
   copy:
     src: "{{ certdir }}/admin-{{ inventory_hostname }}.pem"
     dest: "{{ kube_cert_dir }}"
+    with_items:
+      - kubernetes.pem
+      - ca.pem
+      - ca-key.pem
+      - kubernetes-key.pem
 - name: Copy encryption-config.yaml to masters
   copy:
     src: "{{ certdir }}/encryption-config.yaml"
