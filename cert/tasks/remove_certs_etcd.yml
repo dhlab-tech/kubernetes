@@ -1,0 +1,5 @@
+---
+- name: Remove ca.pem to etcd-members
+  file:
+    path: "{{ etcd_dir }}/"
+    state: absent

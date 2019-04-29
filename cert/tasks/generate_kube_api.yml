@@ -5,7 +5,7 @@
   register: api
 - name: Save ips of all masters to var
   set_fact:
-    api_ips: "{{ api_ips | default('') + hostvars[item]['ansible_default_ipv4']['address'] + ',' }}"
+    api_ips: "{{ api_ips | default('') + hostvars[item]['ansible_host'] + ',' }}"
   with_items: "{{ groups['kubemasters'] | union (groups['etcd']) | unique  }}"
   when: not api.stat.exists
 - debug:
@@ -21,7 +21,7 @@
   shell: 
     cmd: |
       cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
-        -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},127.0.0.1,kubernetes.default,{{ cluster_name }} \
+        -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},{{ api_ips }}127.0.0.1,kubernetes.default,{{ cluster_name }} \
         -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
   args:
     chdir: "{{ certdir }}"
