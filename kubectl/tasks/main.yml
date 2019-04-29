@@ -11,4 +11,4 @@
     mode: 0755
   when: not kubectl.stat.exists
   become: yes
-  tags: ["download_kubectl"]
+  tags: ['kubectl']
