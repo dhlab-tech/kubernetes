@@ -4,8 +4,8 @@
 
 - name: Ensure etcd directories
   import_tasks: check_directories.yml
-  tags: ['check_directories']
+  tags: ['check_etcd']
 
 - name: Ensure etcd systemd unit
   import_tasks: ensure_systemd.yml
-  tags: ['ensure_systemd']
+  tags: ['ensure_etcd']
