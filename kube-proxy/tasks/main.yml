@@ -33,16 +33,16 @@
 - name: Ensure default context for kubeproxy
   shell: "kubectl config use-context default --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
   tags: ['kube-proxy']
+- name: "Create kube-proxy dirs if not exist"
+  file:
+    path: "/var/lib/kube-proxy"
+    state: directory
+  tags: ['kube-proxy']
 - name: Ensure kubeproxy kubeconfig
   copy:
     src: "/etc/kubernetes/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig"
     remote_src: yes
-  tags: ['kube-proxy']
-- name: "Create kube-proxy dirs if not exist"
-  file:
-    path: "/var/lib/kube-proxy"
-    state: directory
   tags: ['kube-proxy']
 - name: Ensure kubeproxy config
   template:
