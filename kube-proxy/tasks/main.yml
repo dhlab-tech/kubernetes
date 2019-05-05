@@ -2,54 +2,65 @@
   stat:
     path: "/usr/bin/kube-proxy"
   register: kubeproxy
+  tags: ['kube-proxy']
 - name: Download kube-proxy binary
   get_url:
     url: "{{ kube_proxy_url }}"
     dest: "/usr/bin/kube-proxy"
     mode: 0755
   when: not kubeproxy.stat.exists
+  tags: ['kube-proxy']
 - name: Set kubeproxy
   shell: "kubectl config set-cluster {{ cluster_name }} \
           --certificate-authority={{ kube_cert_dir }}/ca.pem \
           --embed-certs=true \
           --server=https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }} \
           --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+  tags: ['kube-proxy']
 - name: Set kubeproxy credentials
   shell: "kubectl config set-credentials kube-proxy \
           --client-certificate={{ kube_cert_dir }}/kube-proxy.pem \
           --client-key={{ kube_cert_dir }}/kube-proxy-key.pem \
           --embed-certs=true \
           --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+  tags: ['kube-proxy']
 - name: Set context for kubeproxy
   shell: "kubectl config set-context default \
           --cluster={{ cluster_name }} \
           --user=kube-proxy \
           --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+  tags: ['kube-proxy']
 - name: Ensure default context for kubeproxy
   shell: "kubectl config use-context default --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
+  tags: ['kube-proxy']
+- name: "Create kube-proxy dirs if not exist"
+  file:
+    path: "/var/lib/kube-proxy"
+    state: directory
+  tags: ['kube-proxy']
 - name: Ensure kubeproxy kubeconfig
   copy:
     src: "/etc/kubernetes/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig"
     remote_src: yes
-- name: "Create kube-proxy dirs if not exist"
-  file:
-    path: "/var/lib/kube-proxy"
-    state: directory
+  tags: ['kube-proxy']
 - name: Ensure kubeproxy config
   template:
     src: "kube-proxy.conf.j2"
     dest: "/var/lib/kube-proxy/kube-proxy-config.yaml"
     mode: 0644
+  tags: ['kube-proxy']
 - name: Ensure kube-proxy systemd unit file
   template:
     src: "kube-proxy.service.j2"
     dest: "/lib/systemd/system/kube-proxy.service"
     mode: 0644
+  tags: ['kube-proxy']
 - name: Ensure systemd kube-proxy service
   systemd:
     name: kube-proxy
     state: restarted
     daemon_reload: yes
     enabled: yes
+  tags: ['kube-proxy']
 
