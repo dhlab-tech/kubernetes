@@ -19,6 +19,7 @@ ExecStart=/usr/bin/kube-apiserver \
   --encryption-provider-config={{ kube_dir }}/encryption-config.yaml \
   --insecure-bind-address=127.0.0.1 \
   --insecure-port=8080 \
+  --secure-port={{ kube_apiserver_port }} \
   --kubelet-certificate-authority={{ kube_cert_dir }}/ca.pem \
   --kubelet-client-certificate={{ kube_cert_dir }}/kubernetes.pem \
   --kubelet-client-key={{ kube_cert_dir }}/kubernetes-key.pem \

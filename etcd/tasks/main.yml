@@ -2,10 +2,6 @@
   import_tasks: download_etcd.yml
   tags: ['download_etcd']
 
-- name: Ensure iptables rules
-  import_tasks: iptables_rules.yml
-  tags: ['ensure_iptables_rules']
-
 - name: Ensure etcd directories
   import_tasks: check_directories.yml
   tags: ['check_etcd']
