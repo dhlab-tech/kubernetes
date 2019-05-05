@@ -1,0 +1,10 @@
+---
+- name: Install Nginx
+  package:
+    name: nginx
+    state: latest
+  tags: ["install_ha_nginx"]
+
+- name: Ensure ha config
+  import_tasks: ha.yml
+  tags: ["ensure_ha"]

@@ -1,21 +1,11 @@
 ---
-- name: Copy ca.pem to nodes
+- name: Copy certs to nodes
   copy:
-    src: "{{ certdir }}/ca.pem"
+    src: "{{ item }}"
     dest: "{{ kube_cert_dir }}"
-- name: Copy kube-proxy.pem to nodes
-  copy:
-    src: "{{ certdir }}/kube-proxy.pem"
-    dest: "{{ kube_cert_dir }}"
-- name: Copy kube-proxy-key.pem to nodes
-  copy:
-    src: "{{ certdir }}/kube-proxy-key.pem"
-    dest: "{{ kube_cert_dir }}"
-- name: Copy node specific files to nodes
-  copy:
-    src: "{{ certdir }}/{{ inventory_hostname }}-key.pem"
-    dest: "{{ kube_cert_dir }}"
-- name: Copy node specific files to nodes
-  copy:
-    src: "{{ certdir }}/{{ inventory_hostname }}.pem"
-    dest: "{{ kube_cert_dir }}"
+  with_items:
+    - "{{ certdir }}/ca.pem"
+    - "{{ certdir }}/kube-proxy.pem"
+    - "{{ certdir }}/kube-proxy-key.pem"
+    - "{{ certdir }}/{{ inventory_hostname }}-key.pem"
+    - "{{ certdir }}/{{ inventory_hostname }}.pem"
