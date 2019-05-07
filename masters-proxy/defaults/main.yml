@@ -1,2 +1,2 @@
 ---
-ha_master_hostname: kaas-node-k8s-01
+ha_master_hostname: kaas-node-k8s-proxy

@@ -13,4 +13,4 @@
     - ca.pem
     - ca-key.pem
     - kubernetes-key.pem
-    - "admin-{{ inventory_hostname }}.pem"
+    - admin.pem

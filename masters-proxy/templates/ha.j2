@@ -1,6 +1,6 @@
 upstream masters {
 {% for host in master_hosts %}
-         server {{ host }}:6443;
+         server {{ host }};
 {% endfor %}
 }
 
@@ -9,6 +9,6 @@ server {
         server_name {{ ha_master_hostname }};
 
         location / {
-                proxy_pass https://masters:6443;
+                proxy_pass https://masters;
         }
 }

@@ -16,4 +16,3 @@
 
 - name: Apply Calico definition on k8s
   command: 'kubectl -f apply {{ workdir.path }}/calico.yaml'
-
