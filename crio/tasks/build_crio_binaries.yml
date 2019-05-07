@@ -3,10 +3,14 @@
   stat:
     path: "{{ build_crio_dir }}"
   register: crio_src
+- name: Create tmp dirs if not exist
+  file:
+    path: "{{ build_crio_dir }}"
+    state: directory
 - name: Download cri-o source if no exists
   unarchive:
     src: "{{ crio_src_url }}"
-    dest: "{{ build_crio_dir }}"
+    dest: "/tmp"
     remote_src: yes
     mode: 0755
   when: not crio_src.stat.exists

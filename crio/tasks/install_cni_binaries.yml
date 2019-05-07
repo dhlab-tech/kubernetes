@@ -2,7 +2,7 @@
 - name: Check CNI binaries already exists
   stat:
     path: "{{ cni_bin_dir }}/loopback"
-  register: cni
+  register: cni_binaries_install
 
 - name: Create CNI dirs if not exist
   file:
@@ -18,4 +18,4 @@
     dest: "{{ cni_bin_dir }}"
     remote_src: yes
     mode: 0755
-  when: not cni.stat.exists
+  when: not cni_binaries_install.stat.exists
