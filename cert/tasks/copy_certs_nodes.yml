@@ -3,6 +3,7 @@
   copy:
     src: "{{ item }}"
     dest: "{{ kube_cert_dir }}"
+  become: yes
   with_items:
     - "{{ certdir }}/ca.pem"
     - "{{ certdir }}/kube-proxy.pem"

@@ -20,3 +20,4 @@
   with_items:
     - { src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/etcd" , dest: "/usr/bin/etcd" }
     - { src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/etcdctl" , dest: "/usr/bin/etcdctl" }
+  when: not etcd.stat.exists

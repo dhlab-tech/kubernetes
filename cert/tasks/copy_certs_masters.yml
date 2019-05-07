@@ -3,6 +3,7 @@
   copy:
     src: "{{ certdir }}/encryption-config.yaml"
     dest: "{{ kube_dir }}"
+  become: yes
 
 - name: Copy all certs to kubemaster
   copy:
@@ -14,3 +15,4 @@
     - ca-key.pem
     - kubernetes-key.pem
     - admin.pem
+  become: yes

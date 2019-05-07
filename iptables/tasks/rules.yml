@@ -1,4 +1,3 @@
----
 - name: Iptables | Install iptables
   package:
     name: "{{ item }}"

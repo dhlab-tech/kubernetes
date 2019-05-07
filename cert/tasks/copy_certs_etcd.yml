@@ -3,11 +3,14 @@
   copy:
     src: "{{ certdir }}/ca.pem"
     dest: "{{ etcd_dir }}/"
+  become: yes
 - name: Copy kubernetes.pem to etcd-members
   copy:
     src: "{{ certdir }}/kubernetes.pem"
     dest: "{{ etcd_dir }}/"
+  become: yes
 - name: Copy kubernetes-key.pem to etcd-members
   copy:
     src: "{{ certdir }}/kubernetes-key.pem"
     dest: "{{ etcd_dir }}/"
+  become: yes

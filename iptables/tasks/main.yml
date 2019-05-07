@@ -2,8 +2,9 @@
 - name: Iptables | Merge default values with user ones
   set_fact:
     iptables: "{{ iptables_defaults | combine(iptables) }}"
-  tags: ['ensure_iptables_rules']
+  tags: ['merge_ensure_iptables_rules']
 
-- include_tasks: rules.yml
+- name: Ensure rules
+  include_tasks: rules.yml
   when: iptables.enabled
   tags: ['ensure_iptables_rules']
