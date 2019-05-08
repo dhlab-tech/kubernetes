@@ -6,7 +6,6 @@
 - name: Download CFSSLjson binary
   get_url:
     url: "{{ cfssl_json_binary_url }}"
-    dest: /usr/local/bin/cfssljson
+    dest: ./cfssljson
     mode: 0755
-  become: yes
   when: not cfssljson.stat.exists
