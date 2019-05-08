@@ -7,13 +7,6 @@ metadata:
     kubernetes.io/bootstrapping: rbac-defaults
   name: system:kube-apiserver-to-kubelet
 rules:
-  - apiGroups:
-      - ""
-    resources:
-      - nodes/proxy
-      - nodes/stats
-      - nodes/log
-      - nodes/spec
-      - nodes/metrics
-    verbs:
-      - "*"
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
