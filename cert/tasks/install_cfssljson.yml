@@ -1,7 +1,7 @@
 ---
 - name: Check if CFSSLjson binary already installed
   stat:
-    path: /usr/local/bin/cfssljson
+    path: ./cfssljson
   register: cfssljson
 - name: Download CFSSLjson binary
   get_url:

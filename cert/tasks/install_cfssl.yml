@@ -1,7 +1,7 @@
 ---
 - name: Check if CFSSL binary already installed
   stat:
-    path: /usr/local/bin/cfssl
+    path: ./cfssl
   register: cfssl
 - name: Download CFSSL binary
   get_url:
