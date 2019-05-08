@@ -1,11 +1,11 @@
 ---
 - name: Check if CFSSL binary already installed
   stat:
-    path: ./cfssl
+    path: "{{ cfssl_install_path }}/cfssl"
   register: cfssl
 - name: Download CFSSL binary
   get_url:
     url: "{{ cfssl_binary_url }}"
-    dest: ./cfssl
+    dest: "{{ cfssl_install_path }}/cfssl"
     mode: 0755
   when: not cfssl.stat.exists

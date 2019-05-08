@@ -20,9 +20,9 @@
 - name: Generate kube-api keys
   shell: 
     cmd: |
-      ./cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
+      {{ cfssl_install_path }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
         -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},{{ api_ips }}127.0.0.1,kubernetes.default,{{ cluster_name }} \
-        -profile=kubernetes kubernetes-csr.json | ./cfssljson -bare kubernetes
+        -profile=kubernetes kubernetes-csr.json | {{ cfssl_json_install_path }}/cfssljson -bare kubernetes
   args:
     chdir: "{{ certdir }}"
     creates: "{{ certdir }}/kubernetes.pem"

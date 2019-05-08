@@ -7,7 +7,9 @@ kube_apiserver_ip: 8.8.8.8
 kube_apiserver_internal_ip: "{{ kube_service_addresses|ipaddr('net')|ipaddr(1)|ipaddr('address') }}"
 kube_service_addresses: 10.20.112.0/20
 cfssl_binary_url: "https://pkg.cfssl.org/R1.2/cfssl_linux-amd64"
+cfssl_install_path: "{{ lookup('env', 'HOME') }}/.cache"
 cfssl_json_binary_url: "https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64"
+cfssl_json_install_path: "{{ lookup('env', 'HOME') }}/.cache"
 admin_csr_cn: "admin"
 admin_csr_key_algo: "rsa"
 admin_csr_key_size: 2048
