@@ -1,0 +1,14 @@
+---
+- name: Create certs dir
+  file:
+    path: "{{ nginx_cert_dir }}"
+    state: directory
+- name: Copy all certs to nginx
+  copy:
+    src: "{{ certdir }}/{{ item }}"
+    dest: "{{ nginx_cert_dir }}"
+  with_items:
+    - ca.pem
+    - kubernetes.pem
+    - kubernetes-key.pem
+  become: yes

@@ -3,8 +3,8 @@
   package:
     name: nginx
     state: latest
-  tags: ["install_ha_nginx"]
+  tags: ["install_master_proxy"]
 
 - name: Ensure ha config
   import_tasks: ha.yml
-  tags: ["ensure_ha"]
+  tags: ["ensure_master_proxy"]

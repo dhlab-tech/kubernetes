@@ -47,14 +47,22 @@
   import_tasks: copy_certs_nodes.yml
   tags: ['copy_certs_nodes']
 
-- name: Remove certs to etcds
+- name: Copy certs to masters proxy
+  import_tasks: copy_certs_masters_proxy.yml
+  tags: ['copy_certs_masters_proxy']
+
+- name: Remove certs from etcds
   import_tasks: remove_certs_etcd.yml
   tags: ['remove_certs_etcd']
 
-- name: Remove certs to masters
+- name: Remove certs from masters
   import_tasks: remove_certs_masters.yml
   tags: ['remove_certs_masters']
 
-- name: Remove certs to nodes
+- name: Remove certs from nodes
   import_tasks: remove_certs_nodes.yml
   tags: ['remove_certs_nodes']
+
+- name: Remove certs from masters proxy
+  import_tasks: copy_certs_masters_proxy.yml
+  tags: ['copy_certs_masters_proxy']

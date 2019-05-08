@@ -1,19 +1,27 @@
 upstream masters {
 {% for host in master_hosts %}
-         server {{ host }};
+         server {{ host }}:6443;
 {% endfor %}
 }
 
 server {
-        listen 6443;
+        listen 6443 ssl;
         server_name {{ ha_master_hostname }};
+
+        ssl_certificate     /etc/nginx/cert/kubernetes.pem;
+        ssl_certificate_key /etc/nginx/cert/kubernetes-key.pem;
 
         location / {
                 proxy_pass https://masters;
 
-                proxy_set_header  Host              $http_host;  
-                proxy_set_header  X-Real-IP         $remote_addr; 
-                proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
-                proxy_set_header  X-Forwarded-Proto https;
+                proxy_ssl_trusted_certificate   /etc/nginx/cert/ca.pem;
+                proxy_ssl_certificate           /etc/nginx/cert/kubernetes.pem;
+                proxy_ssl_certificate_key       /etc/nginx/cert/kubernetes-key.pem;
+
+                proxy_redirect     off;
+
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
         }
 }
