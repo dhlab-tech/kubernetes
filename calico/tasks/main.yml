@@ -1,9 +1,12 @@
 ---
 - name: Calico | Pre-checks
   import_tasks: prechecks.yml
+  tags: ["install_calico"]
 
 - name: Calico | Installation
   import_tasks: install.yml
+  tags: ["install_calico"]
 
 - name: Calico | Post-install
   import_tasks: postinstall.yml
+  tags: ["install_calico"]

@@ -1,11 +1,17 @@
 ---
+- name: Ensure temporary directory to store data files
+  tempfile:
+    state: directory
+    suffix: coredns
+  register: workdir_coredns
+  tags: ["install_coredns"]
 - name: Ensure coreDNS config
   template:
     src: "coredns.yaml.j2"
-    dest: "/var/tmp/coredns.yaml"
+    dest: "{{ workdir_coredns.path }}/coredns.yaml"
     mode: 0644
-  run_once: True
-
+  tags: ["install_coredns"]
 - name: Apply coreDNS
-  shell: kubectl apply -f /var/tmp/coredns.yaml
+  shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns.yaml"
   run_once: True
+  tags: ["install_coredns"]

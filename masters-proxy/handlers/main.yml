@@ -1,5 +1,5 @@
 ---
-- name: Restart Nginx
-  service:
-    name: nginx
+- name: Restart haproxy service
+  systemd:
     state: restarted
+    name: haproxy

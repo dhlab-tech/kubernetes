@@ -1,10 +1,20 @@
 ---
-- name: Install Nginx
-  package:
-    name: nginx
-    state: latest
-  tags: ["install_master_proxy"]
+- name: Install packages
+  apt:
+    name: haproxy
+  notify: Restart haproxy service
+  tags: ["install_masters_proxy"]
 
-- name: Ensure ha config
-  import_tasks: ha.yml
-  tags: ["ensure_master_proxy"]
+- name: Haproxy config
+  template:
+    src: haproxy.cfg
+    dest: /etc/haproxy/
+  notify: Restart haproxy service
+  tags: ["install_masters_proxy"]
+
+- name: enable service haproxy
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started
+  tags: ["install_masters_proxy"]

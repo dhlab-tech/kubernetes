@@ -1,8 +1,8 @@
 ---
 cluster_name: "k8s.test"
 certdir: "cert/{{ cluster_name }}"
-kube_apiserver_ip: 8.8.8.8
-kube_apiserver_port: 6443
+kube_master_host: k8s.infra
+kube_master_port: 6443
 kubeconfig_path: "/root/.kube/config"
 username: "admin"
 context: "k8s.test"

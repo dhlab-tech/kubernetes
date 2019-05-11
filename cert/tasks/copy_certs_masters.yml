@@ -10,9 +10,10 @@
     src: "{{ certdir }}/{{ item }}"
     dest: "{{ kube_cert_dir }}"
   with_items:
-    - kubernetes.pem
     - ca.pem
     - ca-key.pem
+    - kubernetes.pem
     - kubernetes-key.pem
     - admin.pem
+    - admin-key.pem
   become: yes
