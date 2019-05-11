@@ -1,0 +1,16 @@
+{
+    "name": "calico-k8s-network",
+    "cniVersion": "0.1.0",
+    "type": "calico",
+    "etcd_endpoints": "{% for member in groups['etcd'] %}https://{{ member }}:{{ etcd_peer_port }}{% if not loop.last %},{% endif %}{% endfor %}",
+    "log_level": "info",
+    "ipam": {
+        "type": "calico-ipam"
+    },
+    "policy": {
+        "type": "k8s"
+    },
+    "kubernetes": {
+        "kubeconfig": "{{ kube_dir }}/{{ inventory_hostname }}.kubeconfig"
+    }
+}

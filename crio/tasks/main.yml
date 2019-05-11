@@ -6,6 +6,10 @@
   import_tasks: install_cni_binaries.yml
   tags: ['install_cni_binaries']
 
+- name: Install calico plguin CNI binaries
+  import_tasks: install_calico_plugin.yml
+  tags: ['install_calico_plugin']
+
 - name: Install prerequisites for crio build
   import_tasks: install_crio_dependencies.yml
   tags: ['install_crio_dependencies']

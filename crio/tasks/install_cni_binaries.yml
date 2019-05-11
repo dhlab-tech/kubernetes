@@ -19,3 +19,11 @@
     remote_src: yes
     mode: 0755
   when: not cni_binaries_install.stat.exists
+
+- name: Download CNI binaries
+  unarchive:
+    src: "{{ cni_plugins_url }}"
+    dest: "{{ cni_bin_dir }}"
+    remote_src: yes
+    mode: 0755
+  when: not cni_binaries_install.stat.exists

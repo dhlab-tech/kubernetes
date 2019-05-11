@@ -1,4 +1,9 @@
 ---
+- name: Ensure kubelet env vars
+  template:
+    src: kubelet.env.j2
+    dest: "{{ kube_dir }}/kubelet.env"
+    mode: 0644
 - name: Ensure systemd unit file for kubelet
   template:
     src: kubelet.service.j2
