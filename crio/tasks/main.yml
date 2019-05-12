@@ -30,10 +30,26 @@
   import_tasks: download_crictl.yml
   tags: ['download_crictl']
 
+- name: Create crio.conf
+  import_tasks: create_crio_conf.yml
+  tags: ['create_crio_conf']
+
+- name: Create crio directories
+  import_tasks: create_crio_directories.yml
+  tags: ['create_crio_directories']
+
 - name: Ensure config
-  import_tasks: ensure_crio_config.yml
+  import_tasks: ensure_config.yml
   tags: ['ensure_crio_config']
+
+- name: Remove config
+  import_tasks: remove_crio_config.yml
+  tags: ['remove_crio_config']
 
 - name: Ensure systemd crio unit
   import_tasks: ensure_systemd_crio_unit.yml
   tags: ['ensure_systemd_crio_unit']
+
+- name: Check systemd crio unit
+  import_tasks: check_systemd_crio.yml
+  tags: ['check_systemd_crio']

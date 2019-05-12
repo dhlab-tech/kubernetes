@@ -9,3 +9,7 @@
 - name: Ensure etcd systemd unit
   import_tasks: ensure_systemd.yml
   tags: ['ensure_etcd']
+
+- name: Check etcd systemd unit
+  import_tasks: check_systemd.yml
+  tags: ['check_systemd_etcd']

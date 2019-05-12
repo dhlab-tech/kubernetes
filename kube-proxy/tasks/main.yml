@@ -13,3 +13,7 @@
 - name: Ensure systemd kube-proxy
   import_tasks: ensure_systemd_kube_proxy.yml
   tags: ['ensure-systemd-kube-proxy']
+
+- name: Check systemd kube-proxy
+  import_tasks: check_systemd.yml
+  tags: ['check_systemd_kube_proxy']

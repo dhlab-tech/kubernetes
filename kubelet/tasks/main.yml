@@ -27,7 +27,10 @@
   when: cni == "flannel"
   tags: ["kubelet_flannel"]
 
-- name: Ensure kubelet
-  import_tasks: ensure_kubelet.yml
-  tags: ["ensure_kubelet"]
+- name: Ensure systemd kubelet
+  import_tasks: ensure_systemd_kubelet.yml
+  tags: ["ensure_systemd_kubelet"]
 
+- name: Check systemd kubelet
+  import_tasks: check_systemd.yml
+  tags: ["check_systemd_kubelet"]

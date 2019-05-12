@@ -19,8 +19,12 @@
   tags: ['ensure_token_file']
 
 - name: Ensure systemd files
-  import_tasks: ensure_kube_control_plane_systemd.yml
-  tags: ['ensure_kube_control_plane_systemd']
+  import_tasks: ensure_systemd.yml
+  tags: ['ensure_systemd_kube_control_plane']
+
+- name: Check systemd files
+  import_tasks: check_systemd.yml
+  tags: ['check_systemd_kube_control_plane']
 
 - name: Ensure cluster roles and binding files
   import_tasks: ensure_cluser_roles.yml
