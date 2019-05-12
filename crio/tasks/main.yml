@@ -40,7 +40,11 @@
 
 - name: Ensure config
   import_tasks: ensure_config.yml
-  tags: ['ensure_config']
+  tags: ['ensure_crio_config']
+
+- name: Remove config
+  import_tasks: remove_crio_config.yml
+  tags: ['remove_crio_config']
 
 - name: Ensure systemd crio unit
   import_tasks: ensure_systemd_crio_unit.yml

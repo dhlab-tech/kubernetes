@@ -4,3 +4,10 @@
     src: 10-calico.conf.j2
     dest: "{{ cni_conf_dir }}/10-calico.conf"
     mode: 0644
+
+- name: Ensure nodename for calico
+  shell: |
+      echo '{{ kubenodes }}' > /var/lib/calico/nodename
+  loop: "{{ groups['kubenodes'] }}"
+  loop_control:
+    loop_var: kubenode
