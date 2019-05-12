@@ -8,5 +8,5 @@ metadata:
   name: system:kube-apiserver-to-kubelet
 rules:
   - apiGroups: [""]
-    resources: ["nodes"]
+    resources: ["nodes","pods","services","endpoints"]
     verbs: ["get", "list", "watch"]

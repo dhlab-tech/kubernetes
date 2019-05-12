@@ -45,3 +45,7 @@
 - name: Ensure systemd crio unit
   import_tasks: ensure_systemd_crio_unit.yml
   tags: ['ensure_systemd_crio_unit']
+
+- name: Check systemd crio unit
+  import_tasks: check_systemd_crio.yml
+  tags: ['check_systemd_crio']
