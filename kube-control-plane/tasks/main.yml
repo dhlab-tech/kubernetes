@@ -11,16 +11,16 @@
   tags: ['download_kube_controller_manager']
 
 - name: Ensure direcotries
-  import_tasks: ensure_directories.yml
-  tags: ['ensure_directories']
+  import_tasks: ensure_kube_control_plane_directories.yml
+  tags: ['ensure_kube_control_plane_directories']
 
 - name: Ensure token file
   import_tasks: ensure_token_file.yml
   tags: ['ensure_token_file']
 
 - name: Ensure systemd files
-  import_tasks: ensure_systemd.yml
-  tags: ['ensure_systemd']
+  import_tasks: ensure_kube_control_plane_systemd.yml
+  tags: ['ensure_kube_control_plane_systemd']
 
 - name: Ensure cluster roles and binding files
   import_tasks: ensure_cluser_roles.yml

@@ -1,3 +1,4 @@
+---
 - name: Remove all pem files to masters
   file:
     path: "{{ kube_cert_dir }}/"

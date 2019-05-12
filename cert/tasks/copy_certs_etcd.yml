@@ -1,4 +1,11 @@
 ---
+- name: Create necessary dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+     - "{{ etcd_dir }}"
 - name: Copy ca.pem to etcd-members
   copy:
     src: "{{ certdir }}/ca.pem"

@@ -1,10 +1,16 @@
 ---
+- name: Create necessary dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+     - "{{ kube_dir }}"
+     - "{{ kube_cert_dir }}"
 - name: Copy encryption-config.yaml to masters
   copy:
     src: "{{ certdir }}/encryption-config.yaml"
     dest: "{{ kube_dir }}"
-  become: yes
-
 - name: Copy all certs to kubemaster
   copy:
     src: "{{ certdir }}/{{ item }}"
@@ -14,6 +20,5 @@
     - ca-key.pem
     - kubernetes.pem
     - kubernetes-key.pem
-    - admin.pem
-    - admin-key.pem
-  become: yes
+    - kube-proxy.pem
+    - kube-proxy-key.pem

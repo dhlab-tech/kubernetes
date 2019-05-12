@@ -1,5 +1,0 @@
----
-- name: Remove certs from nginx
-  file:
-    path: "{{ nginx_cert_dir }}/"
-    state: absent

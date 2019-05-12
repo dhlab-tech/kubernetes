@@ -4,11 +4,6 @@
     msg: "Use calico or kuberouter or flannel for cni"
   when: cni not in ['calico', 'kuberouter', 'flannel']
 
-- name: "Create cni config dir if not exist"
-  file:
-    path: "{{ cni_conf_dir }}"
-    state: directory
-
 - name: Ensure kube config for kubelet
   import_tasks: config.yml
   tags: ["kubelet_config"]

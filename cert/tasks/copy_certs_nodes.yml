@@ -1,9 +1,15 @@
 ---
+- name: Create necessary dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+     - "{{ kube_cert_dir }}"
 - name: Copy certs to nodes
   copy:
     src: "{{ item }}"
     dest: "{{ kube_cert_dir }}"
-  become: yes
   with_items:
     - "{{ certdir }}/ca.pem"
     - "{{ certdir }}/kube-proxy.pem"

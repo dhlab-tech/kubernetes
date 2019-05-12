@@ -1,6 +1,10 @@
+- name: "Create kube-proxy dirs if not exist"
+  file:
+    path: "/var/lib/kube-proxy"
+    state: directory
 - name: Ensure kubeproxy kubeconfig
   copy:
-    src: "/etc/kubernetes/kube-proxy.kubeconfig"
+    src: "{{ kube_dir }}/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig"
     remote_src: yes
 - name: Ensure kubeproxy config

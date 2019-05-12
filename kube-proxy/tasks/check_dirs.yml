@@ -1,4 +1,0 @@
-- name: "Create kube-proxy dirs if not exist"
-  file:
-    path: "/var/lib/kube-proxy"
-    state: directory

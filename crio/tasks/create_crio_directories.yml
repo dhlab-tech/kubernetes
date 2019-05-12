@@ -1,9 +1,0 @@
----
-- name: Create crio folder
-  file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-  - "/etc/crio"
-  - "/usr/local/libexec/crio"
-  - "/etc/containers"

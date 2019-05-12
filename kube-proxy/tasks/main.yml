@@ -4,11 +4,7 @@
 
 - name: Settigs for kube-proxy
   import_tasks: ensure_kube_proxy_settings.yml
-  tags: ['ensure-kube-proxy-settigs']
-
-- name: Check dirs for kubeproxy
-  import_tasks: check_dirs.yml
-  tags: ['check-dirs-kube-proxy']
+  tags: ['ensure-kube-proxy-settings']
 
 - name: Ensure config for kube-proxy and kubeconfig
   import_tasks: ensure_config.yml
@@ -17,4 +13,3 @@
 - name: Ensure systemd kube-proxy
   import_tasks: ensure_systemd_kube_proxy.yml
   tags: ['ensure-systemd-kube-proxy']
-

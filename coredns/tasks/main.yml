@@ -12,6 +12,6 @@
     mode: 0644
   tags: ["install_coredns"]
 - name: Apply coreDNS
-  shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns.yaml"
+  shell: "kubectl delete -f {{ workdir_coredns.path }}/coredns.yaml"
   run_once: True
   tags: ["install_coredns"]
