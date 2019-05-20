@@ -14,4 +14,4 @@
 - name: Apply coreDNS
   shell: "kubectl delete -f {{ workdir_coredns.path }}/coredns.yaml"
   run_once: True
-  tags: ["install_coredns"]
+  tags: ["delete_coredns"]
