@@ -7,7 +7,7 @@
 
 - name: Get latest Calico networking manifest
   get_url:
-    url: "https://docs.projectcalico.org/v{{ calico_version }}/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml"
+    url: "https://docs.projectcalico.org/v{{ calico_version }}/manifests/calico.yaml"
     dest: "{{ workdir.path }}/calico.yaml"
 
 - name: Change pod CIDR
