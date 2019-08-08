@@ -2,14 +2,12 @@
 - name: Install packages
   apt:
     name: haproxy
-  notify: Restart haproxy service
   tags: ["install_masters_proxy"]
 
 - name: Haproxy config
   template:
     src: haproxy.cfg
     dest: /etc/haproxy/
-  notify: Restart haproxy service
   tags: ["install_masters_proxy"]
 
 - name: enable service haproxy

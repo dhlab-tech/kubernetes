@@ -1,6 +1,6 @@
 - name: Enable OverlayFS kernel module
   import_tasks: enable_overlay_fs_kernel.yml
-  tags: ['enable_overaly_fs_kernel']
+  tags: ['enable_overlay_fs_kernel']
 
 - name: Install CNI binaries
   import_tasks: install_cni_binaries.yml

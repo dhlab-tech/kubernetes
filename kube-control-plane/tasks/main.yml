@@ -20,7 +20,7 @@
 
 - name: Ensure systemd files
   import_tasks: ensure_kube_control_plane_systemd.yml
-  tags: ['ensure_systemd_kube_control_plane']
+  tags: ['ensure_kube_control_plane_systemd']
 
 - name: Check systemd files
   import_tasks: check_systemd.yml

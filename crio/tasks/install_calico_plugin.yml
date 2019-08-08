@@ -4,7 +4,7 @@
     path: "{{ cni_bin_dir }}/calico"
   register: calico_bin
 
-- name: Download calio binary
+- name: Download calico binary
   get_url:
     url: "{{ calico_plugin_cni }}"
     dest: "{{ cni_bin_dir }}/calico"
@@ -16,7 +16,7 @@
     path: "{{ cni_bin_dir }}/calico"
   register: calico_ipam_bin
 
-- name: Download calio binary
+- name: Download calico binary
   get_url:
     url: "{{ calico_ipam_plugin_cni }}"
     dest: "{{ cni_bin_dir }}/calico-ipam"

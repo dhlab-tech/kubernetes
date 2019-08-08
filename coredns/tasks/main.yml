@@ -4,13 +4,13 @@
     state: directory
     suffix: coredns
   register: workdir_coredns
-  tags: ["workdir_coredns"]
+  tags: ["ensure_workdir_coredns"]
 - name: Ensure coreDNS config
   template:
     src: "coredns.yaml.j2"
     dest: "{{ workdir_coredns.path }}/coredns.yaml"
     mode: 0644
-  tags: ["workdir_coredns"]
+  tags: ["ensure_config_coredns"]
 - name: Apply coreDNS
   shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns.yaml"
   run_once: True
