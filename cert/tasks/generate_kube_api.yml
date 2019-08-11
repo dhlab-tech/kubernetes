@@ -6,7 +6,7 @@
 - name: Save ips of all masters to var
   set_fact:
     api_ips: "{{ api_ips | default('') + hostvars[item]['ansible_host'] + ',' }}"
-  with_items: "{{ groups['kubemasters'] | union (groups['etcd']) | unique  }}"
+  with_items: "{{ groups['kubemasters'] | union (groups['kubenodes']) | union (groups['etcd']) | unique  }}"
   when: not api.stat.exists
 - debug:
     var: api_ips

@@ -5,14 +5,25 @@
     suffix: calico
   register: workdir
 
-- name: Get latest Calico networking manifest
-  get_url:
-    url: "https://docs.projectcalico.org/v{{ calico_version }}/manifests/calico.yaml"
-    dest: "{{ workdir.path }}/calico.yaml"
+- name: Ensure tempate for calico over etcd
+  template:
+    src: "calico-etcd.yaml.j2"
+    dest: "{{ workdir.path }}/calico-etcd.yaml"
+    mode: 0644
+  run_once: True
 
 - name: Change pod CIDR
   command: 'sed -i -e "s:192.168.0.0/16:{{ pod_cidr }}:g" {{ workdir.path }}/calico.yaml'
   when: pod_cidr != '192.168.0.0/16'
+  
+- name: Change etcd key
+  command: 'sed -i -e "s:__ETCD_KEY__:$(cat {{ certdir }}/kubernetes-key.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
+
+- name: Change etcd cert
+  command: 'sed -i -e "s:__ETCD_CER__:$(cat {{ certdir }}/kubernetes.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
+
+- name: Change etcd ca
+  command: 'sed -i -e "s:__ETCD_CA__:$(cat {{ certdir }}/ca.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
 
 - name: Apply Calico definition on k8s
   command: 'kubectl apply -f {{ workdir.path }}/calico.yaml'
