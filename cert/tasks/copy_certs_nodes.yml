@@ -15,6 +15,6 @@
     - "{{ certdir }}/kube-proxy.pem"
     - "{{ certdir }}/kube-proxy-key.pem"
     - "{{ certdir }}/kubernetes.pem"
-    - "{{ certdir }}/kuberentes-key.pem"
+    - "{{ certdir }}/kubernetes-key.pem"
     - "{{ certdir }}/{{ inventory_hostname }}-key.pem"
     - "{{ certdir }}/{{ inventory_hostname }}.pem"

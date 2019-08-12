@@ -8,22 +8,30 @@
 - name: Ensure tempate for calico over etcd
   template:
     src: "calico-etcd.yaml.j2"
-    dest: "{{ workdir.path }}/calico.yaml"
+    dest: "{{ workdir.path }}/calico-etcd.yaml"
     mode: 0644
   run_once: True
 
-- name: Change pod CIDR
-  command: 'sed -i -e "s:192.168.0.0/16:{{ pod_cidr }}:g" {{ workdir.path }}/calico.yaml'
-  when: pod_cidr != '192.168.0.0/16'
-  
+- name: Register key
+  shell: cat {{ kube_dir }}/ssl/kubernetes-key.pem | base64 -w 0
+  register: kubernetes_key_pem
+
 - name: Change etcd key
-  command: 'sed -i -e "s:__ETCD_KEY__:$(cat {{ certdir }}/kubernetes-key.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
+  shell: sed -i "s|__ETCD_KEY__|{{ kubernetes_key_pem.stdout }}|g" {{ workdir.path }}/calico-etcd.yaml
+
+- name: Register cert
+  shell: cat {{ kube_dir }}/ssl/kubernetes.pem | base64 -w 0
+  register: kubernetes_pem
 
 - name: Change etcd cert
-  command: 'sed -i -e "s:__ETCD_CER__:$(cat {{ certdir }}/kubernetes.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
+  shell: sed -i "s|__ETCD_CRT__|{{ kubernetes_pem.stdout }}|g" {{ workdir.path }}/calico-etcd.yaml
+
+- name: Register ca
+  shell: cat {{ kube_dir }}/ssl/ca.pem | base64 -w 0
+  register: ca_pem
 
 - name: Change etcd ca
-  command: 'sed -i -e "s:__ETCD_CA__:$(cat {{ certdir }}/ca.pem | base64 -w 0):g" {{ workdir.path }}/calico.yaml'
+  shell: sed -i "s|__ETCD_CA__|{{ ca_pem.stdout }}|g" {{ workdir.path }}/calico-etcd.yaml
 
 - name: Apply Calico definition on k8s
-  command: 'kubectl apply -f {{ workdir.path }}/calico.yaml'
+  command: 'kubectl apply -f {{ workdir.path }}/calico-etcd.yaml'
