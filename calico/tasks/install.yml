@@ -8,7 +8,7 @@
 - name: Ensure tempate for calico over etcd
   template:
     src: "calico-etcd.yaml.j2"
-    dest: "{{ workdir.path }}/calico-etcd.yaml"
+    dest: "{{ workdir.path }}/calico.yaml"
     mode: 0644
   run_once: True
 
