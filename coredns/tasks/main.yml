@@ -5,17 +5,18 @@
     suffix: coredns
   register: workdir_coredns
   tags: ["ensure_workdir_coredns"]
+
 - name: Ensure coreDNS config
   template:
     src: "coredns.yaml.j2"
     dest: "{{ workdir_coredns.path }}/coredns.yaml"
     mode: 0644
   tags: ["ensure_config_coredns"]
-- name: Apply coreDNS
-  shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns.yaml"
-  run_once: True
+
+- name: CoreDNS | installation
+  import_tasks: install.yml
   tags: ["install_coredns"]
-- name: Delete coreDNS
-  shell: "kubectl delete -f {{ workdir_coredns.path }}/coredns.yaml"
-  run_once: True
+
+- name: CoreDNS | Delete
+  import_tasks: delete.yml
   tags: ["delete_coredns"]
