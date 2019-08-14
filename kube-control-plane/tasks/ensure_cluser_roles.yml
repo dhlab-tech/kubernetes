@@ -13,6 +13,10 @@
     mode: 0644
   run_once: True
 
+- name: sleep for 20 seconds and continue with play
+  wait_for: timeout=20
+  run_once: True
+
 - name: Apply cluster roles
   shell: kubectl apply -f {{ kube_dir }}/clusterrole.yaml
   run_once: True

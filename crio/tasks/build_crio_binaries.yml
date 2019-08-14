@@ -14,7 +14,6 @@
     remote_src: yes
     mode: 0755
   when: not crio_src.stat.exists
-
 - name: Check if cri-o binaries builded
   stat:
     path: "{{ build_crio_dir }}/bin/crio"

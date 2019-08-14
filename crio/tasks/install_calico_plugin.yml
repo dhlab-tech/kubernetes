@@ -13,7 +13,7 @@
 
 - name: Check if calico-ipam already installed
   stat:
-    path: "{{ cni_bin_dir }}/calico"
+    path: "{{ cni_bin_dir }}/calico-ipam"
   register: calico_ipam_bin
 
 - name: Download calico binary
