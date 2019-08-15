@@ -19,3 +19,7 @@
      - "{{ cni_conf_dir }}"
      - "{{ cni_bin_dir }}"
   tags: ["create_necessary_dirs"]
+
+- name: Set hostname
+  shell: echo {{ inventory_hostname }} > /etc/hostname
+  tags: ["set_hostname"]

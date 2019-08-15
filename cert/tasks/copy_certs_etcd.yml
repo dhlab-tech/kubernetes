@@ -6,18 +6,11 @@
     mode: 0755
   with_items:
      - "{{ etcd_dir }}"
-- name: Copy ca.pem to etcd-members
+- name: Copy all certs to etcd-members
   copy:
-    src: "{{ certdir }}/ca.pem"
-    dest: "{{ etcd_dir }}/"
-  become: yes
-- name: Copy kubernetes.pem to etcd-members
-  copy:
-    src: "{{ certdir }}/kubernetes.pem"
-    dest: "{{ etcd_dir }}/"
-  become: yes
-- name: Copy kubernetes-key.pem to etcd-members
-  copy:
-    src: "{{ certdir }}/kubernetes-key.pem"
-    dest: "{{ etcd_dir }}/"
-  become: yes
+    src: "{{ certdir }}/{{ item }}"
+    dest: "{{ etcd_dir }}"
+  with_items:
+    - ca.pem
+    - kubernetes.pem
+    - kubernetes-key.pem
