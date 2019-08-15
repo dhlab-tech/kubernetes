@@ -13,6 +13,11 @@
     src: kubelet.service.j2
     dest: /lib/systemd/system/kubelet.service
     mode: 0644
+- name: Stop systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
 - name: Ensure kubelet systemd service
   systemd:
     name: kubelet
