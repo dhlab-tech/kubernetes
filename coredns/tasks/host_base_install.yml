@@ -1,0 +1,37 @@
+- name: Check if coredns already installed
+  stat:
+    path: /usr/local/bin/coredns
+  register: corends_binary
+
+- name: Download coredns binary
+  unarchive:
+    src: "{{ corends_url_binary }}"
+    dest: /usr/local/bin
+    mode: 0755
+    remote_src: yes
+  when: not corends_binary.stat.exists
+
+- name: Ensure Corefile
+  template:
+    src: "Corefile.j2"
+    dest: "/etc/Corefile"
+    mode: 0644
+
+- name: Ensure coreDNS service
+  template:
+    src: "coredns.service.j2"
+    dest: "/lib/systemd/system/coredns.service"
+    mode: 0644
+
+- name: Stop systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+
+- name: Ensure corends services
+  systemd:
+    name: coredns
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

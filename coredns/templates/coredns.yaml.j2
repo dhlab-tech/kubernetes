@@ -77,6 +77,7 @@ data:
         health
         ready
         kubernetes {{ dns_domain }} cluster.local in-addr.arpa ip6.arpa {
+          endpoint https://192.168.122.2:6443
           tls /etc/ssl/kubernetes.pem /etc/ssl/kubernetes-key.pem /etc/ssl/ca.pem
           pods insecure
           upstream
@@ -137,6 +138,9 @@ spec:
         - name: certs-volume
           mountPath: /etc/ssl/
           readOnly: true
+        - name: kubeconfig-volume
+          mountPath: /etc/kubernetes/
+          readOnly: true
         ports:
         - containerPort: 53
           name: dns
@@ -181,6 +185,10 @@ spec:
           secret:
             secretName: coredns-kube-apiserver-secrets
             defaultMode: 0400
+        - name: kubeconfig-volume
+          hostPath:
+            path: /etc/kubernetes/
+            type: Directory
 ---
 apiVersion: v1
 kind: Service
