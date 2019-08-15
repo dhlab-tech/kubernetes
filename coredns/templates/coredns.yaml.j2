@@ -77,7 +77,7 @@ data:
         health
         ready
         kubernetes {{ dns_domain }} cluster.local in-addr.arpa ip6.arpa {
-          endpoint https://192.168.122.2:6443
+          endpoint https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }}
           tls /etc/ssl/kubernetes.pem /etc/ssl/kubernetes-key.pem /etc/ssl/ca.pem
           pods insecure
           upstream
