@@ -1,15 +1,15 @@
 - name: Check if coredns already installed
   stat:
     path: /usr/local/bin/coredns
-  register: corends_binary
+  register: coredns_binary
 
 - name: Download coredns binary
   unarchive:
-    src: "{{ corends_url_binary }}"
+    src: "{{ coredns_url_binary }}"
     dest: /usr/local/bin
     mode: 0755
     remote_src: yes
-  when: not corends_binary.stat.exists
+  when: not coredns_binary.stat.exists
 
 - name: Ensure Corefile
   template:
@@ -29,7 +29,7 @@
     state: stopped
     enabled: no
 
-- name: Ensure corends services
+- name: Ensure coredns services
   systemd:
     name: coredns
     state: restarted

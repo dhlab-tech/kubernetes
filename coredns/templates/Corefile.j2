@@ -4,13 +4,13 @@
     ready
     kubernetes {{ dns_domain }} cluster.local in-addr.arpa ip6.arpa {
       endpoint https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }}
-      tls /etc/ssl/kubernetes.pem /etc/ssl/kubernetes-key.pem /etc/ssl/ca.pem
+      tls {{ kube_dir }}/ssl/kubernetes.pem {{ kube_dir }}/ssl/kubernetes-key.pem {{ kube_dir }}/ssl/ca.pem
       pods insecure
       upstream
       fallthrough in-addr.arpa ip6.arpa
     }
     prometheus :9153
-    forward . /etc/resolv.conf
+    forward . /run/systemd/resolve/resolv.conf
     cache 30
     loop
     reload
