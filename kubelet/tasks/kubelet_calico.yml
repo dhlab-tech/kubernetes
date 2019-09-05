@@ -13,7 +13,4 @@
 
 - name: Ensure nodename for calico
   shell: |
-    echo '{{ kubenode }}' | tee /var/lib/calico/nodename
-  loop: "{{ groups['kubenodes'] }}"
-  loop_control:
-    loop_var: kubenode
+    echo -n '{{ inventory_hostname }}' | tee /var/lib/calico/nodename
