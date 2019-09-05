@@ -8,7 +8,6 @@
     packages:
     - btrfs-tools
     - git
-    - golang-go
     - iptables
     - libassuan-dev
     - libdevmapper-dev
@@ -26,5 +25,5 @@
     - go-md2man
     - make
     - gcc
-    - libostree-dev
+#    - libostree-dev
     - uidmap
