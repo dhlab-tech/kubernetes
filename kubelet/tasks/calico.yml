@@ -1,6 +1,0 @@
----
-- name: Ensure kubelet env vars
-  template:
-    src: kubelet.env.j2
-    dest: "{{ kube_dir }}/kubelet.env"
-    mode: 0644

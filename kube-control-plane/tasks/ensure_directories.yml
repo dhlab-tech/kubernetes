@@ -1,9 +1,0 @@
----
-- name: Ensure tmp dir
-  file:
-    path: "/var/tmp"
-    state: directory
-- name: Ensure k8s dir
-  file:
-    path: "{{ kube_dir }}"
-    state: directory

@@ -2,12 +2,15 @@
   lineinfile:
     dest: "/etc/hosts"
     regexp: "^.+ {{ item }}$"
-    line: "{{ hostvars[item].ansible_ssh_host }} {{  item  }}"
+    line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{  item  }}"
   with_items: "{{  groups['kubemasters'] | union(groups['kubenodes']) | union(groups['etcd']) | unique  }}"
+  tags: ["add_all_hosts_from_inventory"]
+
 - name: Create necessary dirs
   file:
     path: "{{ item }}"
     state: directory
+    mode: 0755
   with_items:
      - "{{ kube_dir }}"
      - "{{ kube_cert_dir }}"
@@ -15,3 +18,8 @@
      - "{{ etcd_data_dir }}"
      - "{{ cni_conf_dir }}"
      - "{{ cni_bin_dir }}"
+  tags: ["create_necessary_dirs"]
+
+- name: Set hostname
+  shell: echo {{ inventory_hostname }} > /etc/hostname
+  tags: ["set_hostname"]

@@ -1,0 +1,5 @@
+---
+- name: Remove ca.pem to nodes
+  file:
+    path: "{{ kube_cert_dir }}/"
+    state: absent

@@ -1,0 +1,24 @@
+---
+- name: Check if calico already installed
+  stat:
+    path: "{{ cni_bin_dir }}/calico"
+  register: calico_bin
+
+- name: Download calico binary
+  get_url:
+    url: "{{ calico_plugin_cni }}"
+    dest: "{{ cni_bin_dir }}/calico"
+    mode: 0755
+  when: not calico_bin.stat.exists
+
+- name: Check if calico-ipam already installed
+  stat:
+    path: "{{ cni_bin_dir }}/calico-ipam"
+  register: calico_ipam_bin
+
+- name: Download calico binary
+  get_url:
+    url: "{{ calico_ipam_plugin_cni }}"
+    dest: "{{ cni_bin_dir }}/calico-ipam"
+    mode: 0755
+  when: not calico_ipam_bin.stat.exists

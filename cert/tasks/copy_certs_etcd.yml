@@ -1,22 +1,16 @@
 ---
-- name: Copy ca.pem to etcd-members
+- name: Create necessary dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+     - "{{ etcd_dir }}"
+- name: Copy all certs to etcd-members
   copy:
-    src: "{{ certdir }}/ca.pem"
-    dest: "{{ etcd_dir }}/"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['etcd'] }}"
-- name: Copy kubernetes.pem to etcd-members
-  copy:
-    src: "{{ certdir }}/kubernetes.pem"
-    dest: "{{ etcd_dir }}/"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['etcd'] }}"
-- name: Copy kubernetes-key.pem to etcd-members
-  copy:
-    src: "{{ certdir }}/kubernetes-key.pem"
-    dest: "{{ etcd_dir }}/"
-    force: "{{ forcekeys | default('no') }}"
-  delegate_to: "{{ item }}"
-  with_items: "{{ groups['etcd'] }}"
+    src: "{{ certdir }}/{{ item }}"
+    dest: "{{ etcd_dir }}"
+  with_items:
+    - ca.pem
+    - kubernetes.pem
+    - kubernetes-key.pem

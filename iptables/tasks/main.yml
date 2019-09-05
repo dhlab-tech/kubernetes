@@ -1,0 +1,10 @@
+---
+- name: Iptables | Merge default values with user ones
+  set_fact:
+    iptables: "{{ iptables_defaults | combine(iptables) }}"
+  tags: ['ensure_iptables_rules']
+
+- name: Ensure rules
+  import_tasks: rules.yml
+  when: iptables.enabled
+  tags: ['ensure_iptables_rules']

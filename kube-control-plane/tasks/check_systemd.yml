@@ -1,0 +1,11 @@
+- name: status kube-apiserver.service
+  command: systemctl show -p ActiveState --value kube-apiserver.service
+  become: yes
+
+- name: status kube-controller-manager.service
+  command: systemctl show -p ActiveState --value kube-controller-manager.service
+  become: yes
+
+- name: status kube-scheduler.service
+  command: systemctl show -p ActiveState --value kube-scheduler.service
+  become: yes

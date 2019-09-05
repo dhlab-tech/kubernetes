@@ -1,55 +1,19 @@
-- name: Check if kube-proxy binary already installed
-  stat:
-    path: "/usr/bin/kube-proxy"
-  register: kubeproxy
-- name: Download kube-proxy binary
-  get_url:
-    url: "{{ kube_proxy_url }}"
-    dest: "/usr/bin/kube-proxy"
-    mode: 0755
-  when: not kubeproxy.stat.exists
-- name: Set kubeproxy
-  shell: "kubectl config set-cluster {{ cluster_name }} \
-          --certificate-authority={{ kube_cert_dir }}/ca.pem \
-          --embed-certs=true \
-          --server=https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }} \
-          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
-- name: Set kubeproxy credentials
-  shell: "kubectl config set-credentials kube-proxy \
-          --client-certificate={{ kube_cert_dir }}/kube-proxy.pem \
-          --client-key={{ kube_cert_dir }}/kube-proxy-key.pem \
-          --embed-certs=true \
-          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
-- name: Set context for kubeproxy
-  shell: "kubectl config set-context default \
-          --cluster={{ cluster_name }} \
-          --user=kube-proxy \
-          --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
-- name: Ensure default context for kubeproxy
-  shell: "kubectl config use-context default --kubeconfig={{ kube_dir }}/kube-proxy.kubeconfig"
-- name: Ensure kubeproxy kubeconfig
-  copy:
-    src: "/etc/kubernetes/kube-proxy.kubeconfig"
-    dest: "/var/lib/kube-proxy/kubeconfig"
-    remote_src: yes
-- name: "Create kube-proxy dirs if not exist"
-  file:
-    path: "/var/lib/kube-proxy"
-    state: directory
-- name: Ensure kubeproxy config
-  template:
-    src: "kube-proxy.conf.j2"
-    dest: "/var/lib/kube-proxy/kube-proxy-config.yaml"
-    mode: 0644
-- name: Ensure kube-proxy systemd unit file
-  template:
-    src: "kube-proxy.service.j2"
-    dest: "/lib/systemd/system/kube-proxy.service"
-    mode: 0644
-- name: Ensure systemd kube-proxy service
-  systemd:
-    name: kube-proxy
-    state: restarted
-    daemon_reload: yes
-    enabled: yes
+- name: Install kube-proxy
+  import_tasks: download_kube_proxy.yml
+  tags: ['download_kube_proxy']
 
+- name: Settigs for kube-proxy
+  import_tasks: ensure_kube_proxy_settings.yml
+  tags: ['ensure_kube_proxy_settings']
+
+- name: Ensure config for kube-proxy and kubeconfig
+  import_tasks: ensure_config_kube_proxy.yml
+  tags: ['ensure_config_kube_proxy']
+
+- name: Ensure systemd kube-proxy
+  import_tasks: ensure_systemd_kube_proxy.yml
+  tags: ['ensure_systemd_kube_proxy']
+
+- name: Check systemd kube-proxy
+  import_tasks: check_systemd.yml
+  tags: ['check_systemd_kube_proxy']

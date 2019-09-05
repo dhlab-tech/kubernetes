@@ -6,6 +6,18 @@
 - name: Download etcd and etcdclt binary
   unarchive:
     src: "{{ etcd_url }}"
-    dest: /usr/bin
+    dest: /tmp
     mode: 0755
+    remote_src: yes
+  when: not etcd.stat.exists
+
+- name: Ensure binary etcd and etcdclt
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - { src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/etcd" , dest: "/usr/bin/etcd" }
+    - { src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/etcdctl" , dest: "/usr/bin/etcdctl" }
   when: not etcd.stat.exists

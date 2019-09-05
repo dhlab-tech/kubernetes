@@ -8,23 +8,23 @@
 
 - name: Download kube-controller-manager
   import_tasks: download_kube_controller_manager.yml
-  tags: ['download_kube_controller-manager']
+  tags: ['download_kube_controller_manager']
 
 - name: Ensure direcotries
-  import_tasks: ensure_directories.yml
-  tags: ['ensure_directories']
+  import_tasks: ensure_kube_control_plane_directories.yml
+  tags: ['ensure_kube_control_plane_directories']
 
 - name: Ensure token file
   import_tasks: ensure_token_file.yml
   tags: ['ensure_token_file']
 
 - name: Ensure systemd files
-  import_tasks: ensure_systemd.yml
-  tags: ['ensure_systemd']
+  import_tasks: ensure_kube_control_plane_systemd.yml
+  tags: ['ensure_kube_control_plane_systemd']
 
-- name: sleep for 20 seconds and continue with play
-  wait_for: timeout=20
-  run_once: True
+- name: Check systemd files
+  import_tasks: check_systemd.yml
+  tags: ['check_systemd_kube_control_plane']
 
 - name: Ensure cluster roles and binding files
   import_tasks: ensure_cluser_roles.yml

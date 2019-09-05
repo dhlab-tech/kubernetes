@@ -1,0 +1,3 @@
+- name: status kubelet.service
+  command: systemctl show -p ActiveState --value kubelet.service
+  become: yes

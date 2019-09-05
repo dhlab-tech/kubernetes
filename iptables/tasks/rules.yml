@@ -1,0 +1,39 @@
+- name: Iptables | Install iptables
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - iptables
+    - netfilter-persistent
+
+- name: Iptables | Ensure that netfilter-persistent plugins directory exists
+  file:
+    path: /usr/share/netfilter-persistent/plugins.d/
+    state: directory
+
+- name: Iptables | Ensure ip4v rules save plugin
+  copy:
+    src: 15-ip4tables
+    dest: /usr/share/netfilter-persistent/plugins.d/15-ip4tables
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Iptables | Ensure netfilter rules directory exists
+  file:
+    path: /etc/iptables
+    state: directory
+
+- name: Iptables | Put generated rules to {{ ansible_host }}
+  template:
+    src: rules/rules.generator.sh
+    dest: /root/iptables-rules-generator.sh
+    mode: 0755
+
+- name: Iptables | Load generated rules
+  command: /root/iptables-rules-generator.sh
+  changed_when: False
+
+- name: Iptables | Save existing rules
+  command: netfilter-persistent save
+  changed_when: False

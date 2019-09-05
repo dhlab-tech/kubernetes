@@ -4,13 +4,8 @@
     msg: "Use calico or kuberouter or flannel for cni"
   when: cni not in ['calico', 'kuberouter', 'flannel']
 
-- name: "Create cni config dir if not exist"
-  file:
-    path: "{{ cni_conf_dir }}"
-    state: directory
-
 - name: Ensure kube config for kubelet
-  import_tasks: config.yml
+  import_tasks: kubelet_config.yml
   tags: ["kubelet_config"]
 
 - name: Install kubelet
@@ -18,21 +13,24 @@
   tags: ["install_kubelet"]
 
 - name: Ensure calico
-  import_tasks: calico.yml
+  import_tasks: kubelet_calico.yml
   when: cni == "calico"
   tags: ["kubelet_calico"]
 
 - name: Ensure kuberouter
-  import_tasks: kuberouter.yml
+  import_tasks: kubelet_kuberouter.yml
   when: cni == "kuberouter"
   tags: ["kubelet_kuberouter"]
 
 - name: Ensure flannel
-  import_tasks: flannel.yml
+  import_tasks: kubelet_flannel.yml
   when: cni == "flannel"
   tags: ["kubelet_flannel"]
 
-- name: Ensure kubelet
-  import_tasks: ensure_kubelet.yml
-  tags: ["ensure_kubelet"]
+- name: Ensure systemd kubelet
+  import_tasks: ensure_systemd_kubelet.yml
+  tags: ["ensure_systemd_kubelet"]
 
+- name: Check systemd kubelet
+  import_tasks: check_systemd_kubelet.yml
+  tags: ["check_systemd_kubelet"]

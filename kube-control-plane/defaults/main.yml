@@ -9,3 +9,4 @@ node_port_range: "30000-32767"
 pod_cidr: 192.168.0.0/16
 node_cidr_mask_size: 23
 cluster_name: "k8s.test"
+kube_apiserver_port: 6443

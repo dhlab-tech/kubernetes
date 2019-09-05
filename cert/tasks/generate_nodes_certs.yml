@@ -31,9 +31,9 @@
 - name: Generate node keys
   shell:
     cmd: |
-      cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
-          -hostname={{ item }},{{ hostvars[item].ansible_ssh_host }} \
-          -profile=kubernetes {{ item }}-csr.json | cfssljson -bare {{ item }}
+      {{ cfssl_install_path }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
+          -hostname={{ item }},{{ hostvars[item]['ansible_host'] }} \
+          -profile=kubernetes {{ item }}-csr.json | {{ cfssl_json_install_path }}/cfssljson -bare {{ item }}
   args:
     chdir: "{{ certdir }}"
   with_items: "{{ nodes_to_generate }}"

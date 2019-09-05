@@ -7,9 +7,8 @@
   vars:
     packages:
     - btrfs-tools
-    - containers-common
     - git
-    - golang-go
+    - iptables
     - libassuan-dev
     - libdevmapper-dev
     - libglib2.0-dev
@@ -19,9 +18,12 @@
     - libgpg-error-dev
     - libseccomp-dev
     - libsystemd-dev
+    - libprotobuf-dev
+    - libprotobuf-c0-dev
     - libselinux1-dev
     - pkg-config
     - go-md2man
     - make
     - gcc
-    - libostree-dev
+#    - libostree-dev
+    - uidmap

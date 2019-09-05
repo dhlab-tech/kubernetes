@@ -1,0 +1,11 @@
+- name: Ensure kube-proxy systemd unit file
+  template:
+    src: "kube-proxy.service.j2"
+    dest: "/lib/systemd/system/kube-proxy.service"
+    mode: 0644
+- name: Ensure systemd kube-proxy service
+  systemd:
+    name: kube-proxy
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
