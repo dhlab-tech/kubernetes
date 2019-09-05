@@ -20,3 +20,11 @@
 - name: CoreDNS | Delete
   import_tasks: delete.yml
   tags: ["delete_coredns"]
+
+- name: CoreDNS | install host base 
+  import_tasks: host_base_install.yml
+  tags: ["install_coredns_host_base"]
+
+- name: CoreDNS | ensure service host base
+  import_tasks: host_base_k8s_service.yml
+  tags: ["ensure_service_coredns_host_base"]

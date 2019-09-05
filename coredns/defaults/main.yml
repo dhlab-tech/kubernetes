@@ -2,3 +2,7 @@ dns_ip_addr: 10.20.112.10
 cluster_name: "k8s.test"
 dns_domain: "{{ cluster_name }}"
 kube_dir: /etc/kubernetes
+coredns_version: 1.6.2
+coredns_url_binary: https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_amd64.tgz
+kube_apiserver_ip: 10.10.10.2
+kube_apiserver_port: 6443
