@@ -1,0 +1,17 @@
+- set_fact:
+    target_address: "{{ansible_ssh_host}}"
+
+- name: bnx | Get main interface name
+  set_fact:
+        target_interface: "{{ item }}"
+  when: >
+        (hostvars[inventory_hostname]['ansible_%s' % item]|default({}))
+        .get('ipv4', {}).get('address') == target_address
+        or
+        target_address in ((hostvars[inventory_hostname]['ansible_%s' % item]|default({}))
+        .get('ipv4_secondaries'))|map(attribute='address')|list
+  with_items:
+    - "{{ ansible_interfaces }}"
+
+- debug:
+    msg: "{{target_interface}}:{{target_address}}" 

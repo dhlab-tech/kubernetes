@@ -1,0 +1,15 @@
+- name: Ensure core values
+  import_tasks: ./ensure_core_values.yml
+  tags: ['bnx-core-values']
+
+- name: Init bnx interface
+  import_tasks: init_bnx_interface.yml
+  tags: ['bnx']
+
+- name: Ensure rc.local
+  import_tasks: ensure_rc_local.yml
+  tags: ['bnx']
+
+- name: Ensure bnx2x modprobe.d
+  import_tasks: ensure_bnx_modprobe.yml
+  tags: ['bnx']
