@@ -1,5 +1,5 @@
 ---
-- shell: "cat /etc/network/interfaces | grep address | grep {{kube_apiserver_ip}} | wc -l"
+- shell: "cat /etc/network/interfaces | grep address | grep {{ kube_apiserver_ip }} | wc -l"
  register: ch
 
 - debug: 
@@ -8,7 +8,7 @@
 - name: Remove old settings
   lineinfile:
     path: /etc/network/interfaces
-    line: "{{item}}"
+    line: "{{ item }}"
     state: absent
   with_items:  
       - "# The loopback network interface"
