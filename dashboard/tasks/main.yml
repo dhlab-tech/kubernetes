@@ -1,0 +1,14 @@
+  - name: Ensure Kubernetes Dashboard files
+    template:
+      src: dashboard.yaml.j2
+      dest: {{ dashboard_yml_path }}/dashboard.yaml
+      mode: 0644
+    tags: [ "dashboard" ]
+
+  - name: Install Kubernetes Dashboard
+    shell: kubectl apply -f {{ dashboard_yml_path }}/dashboard.yaml
+    tags: [ "dashboard" ]
+
+  - name: Delete Kubernetes Dashboard
+    shell: kubectl delete -f {{ dashboard_yml_path }}/dashboard.yaml
+    tags: [ "delete-dashboard" ]

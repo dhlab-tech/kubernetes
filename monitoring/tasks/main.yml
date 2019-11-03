@@ -1,0 +1,14 @@
+  - name: Ensure monitoring tools files
+    copy:
+      src: templates/monitoring.yaml
+      dest: {{ monitoring_yml_path }}/monitoring.yaml
+      mode: 0644
+    tags: [ "monitoring" ]
+
+  - name: Install monitoring tools
+    shell: kubectl apply -f {{ monitoring_yml_path }}/monitoring.yaml
+    tags: [ "monitoring" ]
+
+  - name: Delete monitoring tools
+    shell: kubectl delete -f {{ monitoring_yml_path }}/monitoring.yaml
+    tags: [ "delete-monitoring" ]
