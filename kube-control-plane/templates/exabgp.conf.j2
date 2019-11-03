@@ -1,0 +1,18 @@
+group kubeapi {
+    hold-time 20;
+    local-as {{ local_asn }};
+    peer-as {{ bgp_peer_asn }};
+    router-id {{ ansible_ssh_host }};
+    graceful-restart;
+    add-path send;
+
+    process kubeapi {
+        run /usr/bin/python2.7 /etc/exabgp/healthcheck.py;
+    }
+
+    neighbor {{ bgp_peer_ip }} {
+        local-address {{ ansible_ssh_host }};
+        description "{{ inventory_hostname }}";
+    }
+
+}

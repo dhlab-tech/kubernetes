@@ -33,3 +33,10 @@
 - name: Ensure lo interface
   import_tasks: ensure_lo_interface.yml
   tags: ['ensure_lo_interface']
+
+- name: Ensure ExaBGP
+  tags: ['ensure_exabgp']
+
+- name: Configure ExaBGP
+  import_tasks: configure_exabgp.yml
+  tags: ['config_exabgp']
