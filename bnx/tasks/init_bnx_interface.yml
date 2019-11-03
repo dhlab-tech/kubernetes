@@ -1,4 +1,5 @@
-- set_fact:
+- name: Set target address
+  set_fact:
     target_address: "{{ ansible_ssh_host }}"
 
 - name: bnx | Get main interface name
@@ -14,4 +15,4 @@
     - "{{ ansible_interfaces }}"
 
 - debug:
-    msg: "{{ target_interface }}:{{ target_address }}" 
+    msg: "{{ target_interface }}:{{ target_address }}"

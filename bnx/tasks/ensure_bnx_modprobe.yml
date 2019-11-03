@@ -3,5 +3,6 @@
     src: bnx2x.conf.j2
     dest: /etc/modprobe.d/bnx2x.conf
 
-- command: update-initramfs -u
+- name: Update kernel through update-initramfs
+  command: update-initramfs -u
 

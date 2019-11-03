@@ -1,4 +1,4 @@
-- include_role: 
+- include_role:
     role: "ansible-exabgp"
 
 - name: Create ExaBGP config
