@@ -29,3 +29,7 @@
 - name: Ensure cluster roles and binding files
   import_tasks: ensure_cluser_roles.yml
   tags: ['ensure_cluser_roles']
+
+- name: Ensure lo interface
+  import_tasks: ensure_lo_interface.yml
+  tags: ['ensure_lo_interface']

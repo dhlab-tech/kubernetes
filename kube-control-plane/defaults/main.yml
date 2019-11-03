@@ -10,3 +10,4 @@ pod_cidr: 192.168.0.0/16
 node_cidr_mask_size: 23
 cluster_name: "k8s.test"
 kube_apiserver_port: 6443
+kube_apiserver_ip: 10.0.10.93

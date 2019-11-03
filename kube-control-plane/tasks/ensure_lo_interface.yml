@@ -1,0 +1,40 @@
+---
+- shell: "cat /etc/network/interfaces | grep address | grep {{kube_apiserver_ip}} | wc -l"
+ register: ch
+
+- debug: 
+    var: ch.stdout
+
+- name: Remove old settings
+  lineinfile:
+    path: /etc/network/interfaces
+    line: "{{item}}"
+    state: absent
+  with_items:  
+      - "# The loopback network interface"
+      - "auto lo"
+      - "iface lo inet loopback"
+  when: ch.stdout == "0"
+
+- name: Add apiserver external IP to lo interface
+  blockinfile:
+    path: /etc/network/interfaces
+    block: |
+      auto lo lo:1
+      iface lo inet loopback
+      iface lo:1 inet static 
+              address {{ kube_apiserver_ip }} 
+              netmask 255.255.255.255 
+  when: ch.stdout == "0"
+
+- name: Reboot host to apply network settings
+  shell: sleep 2 && /sbin/shutdown -r now "System reboot"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when: ch.stdout == "0"
+
+- name: Wait for host
+  local_action: wait_for port=22 host="{{ ansible_ssh_host }}"  search_regex=OpenSSH delay=10
+  when: ch.stdout == "0"
+ 
