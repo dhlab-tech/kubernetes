@@ -1,3 +1,8 @@
+- name: Update
+  apt:
+    update_cache: yes
+  tags: ["system_update"]
+
 - name: Add all hosts from inventory to /etc/hosts
   lineinfile:
     dest: "/etc/hosts"
@@ -19,7 +24,3 @@
      - "{{ cni_conf_dir }}"
      - "{{ cni_bin_dir }}"
   tags: ["create_necessary_dirs"]
-
-- name: Set hostname
-  shell: echo {{ inventory_hostname }} > /etc/hostname
-  tags: ["set_hostname"]
