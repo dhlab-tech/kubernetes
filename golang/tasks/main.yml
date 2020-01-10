@@ -1,3 +1,0 @@
-- name: Install golang
-  import_tasks: install_golang.yml
-  tags: ['install_golang']

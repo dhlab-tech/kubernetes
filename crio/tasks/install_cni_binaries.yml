@@ -1,9 +1,4 @@
 ---
-- name: Check CNI binaries already exists
-  stat:
-    path: "{{ cni_bin_dir }}/loopback"
-  register: cni_binaries_install
-
 - name: Create CNI dirs if not exist
   file:
     path: "{{ item }}"
@@ -12,18 +7,27 @@
       - "{{ cni_bin_dir }}"
       - "{{ cni_conf_dir }}"
 
-- name: Download CNI binaries
-  unarchive:
-    src: "{{ cni_bin_url }}"
+- name: Copy CNI binaries
+  copy:
+    src: "{{ item }}"
     dest: "{{ cni_bin_dir }}"
-    remote_src: yes
     mode: 0755
-  when: not cni_binaries_install.stat.exists
-
-- name: Download CNI binaries
-  unarchive:
-    src: "{{ cni_plugins_url }}"
-    dest: "{{ cni_bin_dir }}"
-    remote_src: yes
-    mode: 0755
-  when: not cni_binaries_install.stat.exists
+  with_items:
+    - cnitool
+    - noop
+    - bandwidth
+    - bridge
+    - dhcp
+    - firewall
+    - flannel
+    - host-device
+    - host-local
+    - ipvlan
+    - loopback
+    - macvlan
+    - portmap
+    - ptp
+    - sbr
+    - static
+    - tuning
+    - vlan

@@ -6,7 +6,6 @@ Requires=crio.service
 
 [Service]
 ExecStart=/usr/bin/kubelet \
-  --allow-privileged=true \
   --anonymous-auth=false \
   --authorization-mode=Webhook \
   --client-ca-file={{ kube_cert_dir }}/ca.pem \

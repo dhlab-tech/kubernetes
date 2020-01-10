@@ -1,0 +1,16 @@
+- name: Create ExaBGP config
+  template:
+    src: exabgp.conf.j2
+    dest: /etc/exabgp/exabgp.conf
+    mode: 0644
+
+- name: Create healthcheck script
+  template:
+    src: healthcheck.py.j2
+    dest: /etc/exabgp/healthcheck.py
+    mode: 0644
+
+- name: Restart ExaBGP service
+  service:
+    name: exabgp
+    state: restarted
