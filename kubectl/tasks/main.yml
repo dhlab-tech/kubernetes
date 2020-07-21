@@ -1,14 +1,6 @@
-- name: Check if kubectl binary already installed
-  stat:
-    path: "/usr/local/bin/kubectl"
-  register: kubectl
-  tags: ["download_kubectl"]
-
-- name: Download kubectl binary
-  get_url:
-    url: "{{ kubectl_url }}"
+- name: Install kubectl binary
+  copy:
+    src: "kubectl"
     dest: "/usr/local/bin/kubectl"
     mode: 0755
-  when: not kubectl.stat.exists
-  become: yes
-  tags: ['kubectl']
+  tags: ['install_kubectl']

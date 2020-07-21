@@ -1,0 +1,18 @@
+- name: install pip
+  apt: name=python-pip state=installed
+
+- name: create exabgp config directory
+  file: |
+    path=/etc/exabgp
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: create path for pid file
+  file: |
+    path=/var/run/exabgp
+    state=directory
+    owner={{ exabgp_user }}
+    group={{ exabgp_group }}
+    mode=0755

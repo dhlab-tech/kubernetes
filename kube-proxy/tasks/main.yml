@@ -1,6 +1,6 @@
 - name: Install kube-proxy
-  import_tasks: download_kube_proxy.yml
-  tags: ['download_kube_proxy']
+  import_tasks: install_kube_proxy.yml
+  tags: ['install_kube_proxy']
 
 - name: Settigs for kube-proxy
   import_tasks: ensure_kube_proxy_settings.yml

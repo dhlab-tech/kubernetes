@@ -1,5 +1,5 @@
-cluster_name: "k8s.test"
+cluster_name: "{{ omit }}"
 pod_cidr: 192.168.0.0/16
-kube_apiserver_ip: 8.8.8.8
+kube_apiserver_ip: "{{ omit }}"
 kube_apiserver_port: 6443
-local_asn: 64999
+local_asn: "{{ omit }}"

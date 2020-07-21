@@ -1,10 +1,11 @@
 ---
 - name: Update kubeconfig for admin context
+  become: no
   shell: |
         kubectl config set-cluster {{ cluster_name }} \
             --certificate-authority={{ certdir }}/ca.pem \
             --embed-certs=true \
-            --server=https://{{ kube_master_host }}:{{ kube_master_port }} \
+            --server=https://{{ kube_apiserver_ip }}:{{ kube_master_port }} \
             --kubeconfig={{ kubeconfig_path }}
         kubectl config set-credentials {{ username }} \
             --client-certificate={{ certdir }}/admin.pem \

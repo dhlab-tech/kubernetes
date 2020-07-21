@@ -1,6 +1,3 @@
-- include_role:
-    role: "ansible-exabgp"
-
 - name: Create ExaBGP config
   template:
     src: exabgp.conf.j2

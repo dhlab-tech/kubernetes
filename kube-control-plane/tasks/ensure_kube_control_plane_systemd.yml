@@ -18,7 +18,7 @@
 - name: Ensure systemd services
   systemd:
     name: "{{ item }}"
-    state: restarted
+    state: started
     daemon_reload: yes
     enabled: yes
   loop:

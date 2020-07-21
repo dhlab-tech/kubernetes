@@ -1,15 +1,8 @@
-- name: Check if coredns already installed
-  stat:
-    path: /usr/local/bin/coredns
-  register: coredns_binary
-
-- name: Download coredns binary
-  unarchive:
-    src: "{{ coredns_url_binary }}"
+- name: Install coredns binary
+  copy:
+    src: "coredns"
     dest: /usr/local/bin
     mode: 0755
-    remote_src: yes
-  when: not coredns_binary.stat.exists
 
 - name: Ensure Corefile
   template:

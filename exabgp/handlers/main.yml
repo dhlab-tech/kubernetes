@@ -1,0 +1,11 @@
+---
+- name: restart exabgp
+  command: service exabgp restart
+
+- name: reload exabgp
+  command: service exabgp reload
+
+- name: remove pid
+  file:
+     state: absent
+     path: "/var/run/exabgp/exabgp.pid"

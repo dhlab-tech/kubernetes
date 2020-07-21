@@ -1,13 +1,8 @@
 ---
-- name: Check if api cert already exists
-  stat:
-    path: "{{ certdir }}/kubernetes.pem"
-  register: api
 - name: Save ips of all masters to var
   set_fact:
     api_ips: "{{ api_ips | default('') + hostvars[item]['ansible_host'] + ',' }}"
   with_items: "{{ groups['kubemasters'] | union (groups['kubenodes']) | union (groups['etcd']) | unique  }}"
-  when: not api.stat.exists
 - debug:
     var: api_ips
 - name: Generate csr for api
@@ -15,7 +10,6 @@
     src: "kubernetes-csr.json.j2"
     dest: "{{ certdir }}/kubernetes-csr.json"
     mode: 0644
-  when: not api.stat.exists
 
 - name: Generate kube-api keys
   shell: 
@@ -26,4 +20,3 @@
   args:
     chdir: "{{ certdir }}"
     creates: "{{ certdir }}/kubernetes.pem"
-  when: not api.stat.exists

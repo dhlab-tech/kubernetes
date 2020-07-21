@@ -12,17 +12,19 @@
     line: "{{ item }}"
     state: absent
   with_items:
-      - "# The loopback network interface"
-      - "auto lo"
-      - "iface lo inet loopback"
+    - "# The loopback network interface"
+    - "auto lo"
+    - "iface lo inet loopback"
   when: ch.stdout == "0"
 
 - name: Add apiserver external IP to lo interface
   blockinfile:
     path: /etc/network/interfaces
     block: |
-      auto lo lo:1
+      auto lo
       iface lo inet loopback
+
+      auto lo:1
       iface lo:1 inet static
               address {{ kube_apiserver_ip }}
               netmask 255.255.255.255
@@ -35,11 +37,13 @@
   ignore_errors: true
   when: ch.stdout == "0"
 
-- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
-  wait_for:
-    port: 22
-    host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
-    search_regex: "OpenSSH"
-    delay: 10
-  connection: local
-  when: ch.stdout == "0"
+#- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+#  wait_for:
+#    port: 22
+#    host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
+#    search_regex: "OpenSSH"
+#    delay: 10
+#  connection: local
+#  when: ch.stdout == "0"
+- pause:
+    seconds: 15

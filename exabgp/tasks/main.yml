@@ -1,0 +1,7 @@
+- name: Pre install exabgp
+  import_tasks: pre_install.yml
+  tags: ['install_exabgp']
+
+- name: Ensure exabgp
+  import_tasks: ensure_exabgp.yml
+  tags: ['install_exabgp']

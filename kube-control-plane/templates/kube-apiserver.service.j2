@@ -5,7 +5,6 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/bin/kube-apiserver \
   --advertise-address={{ ansible_default_ipv4.address }} \
-  --allow-privileged=true \
   --apiserver-count={{ groups['kubemasters'] | length }} \
   --authorization-mode=Node,RBAC \
   --bind-address=0.0.0.0 \
@@ -27,7 +26,6 @@ ExecStart=/usr/bin/kube-apiserver \
   --service-account-key-file={{ kube_cert_dir }}/ca-key.pem \
   --service-cluster-ip-range={{ kube_service_addresses }} \
   --service-node-port-range={{ node_port_range }} \
-{% if kube_version == "1.9.6" %}  --tls-ca-file={{ kube_cert_dir }}/ca.pem \{% endif %}
   --tls-cert-file={{ kube_cert_dir }}/kubernetes.pem \
   --tls-private-key-file={{ kube_cert_dir }}/kubernetes-key.pem \
   --token-auth-file= {{ kube_dir }}/token.auth \

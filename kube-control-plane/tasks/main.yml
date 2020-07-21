@@ -1,14 +1,22 @@
-- name: Download kube-apiserver
-  import_tasks: download_kube_apiserver.yml
-  tags: ['download_kube_apiserver']
+- name: Ensure lo interface
+  import_tasks: ensure_lo_interface.yml
+  tags: ['ensure_lo_interface']
 
-- name: Download kube-scheduler
-  import_tasks: download_kube_scheduler.yml
-  tags: ['download_kube_scheduler']
+- name: Configure ExaBGP
+  import_tasks: configure_exabgp.yml
+  tags: ['config_exabgp']
 
-- name: Download kube-controller-manager
-  import_tasks: download_kube_controller_manager.yml
-  tags: ['download_kube_controller_manager']
+- name: Install kube-apiserver
+  import_tasks: install_kube_apiserver.yml
+  tags: ['install_kube_apiserver']
+
+- name: Install kube-scheduler
+  import_tasks: install_kube_scheduler.yml
+  tags: ['install_kube_scheduler']
+
+- name: Install kube-controller-manager
+  import_tasks: install_kube_controller_manager.yml
+  tags: ['install_kube_controller_manager']
 
 - name: Ensure direcotries
   import_tasks: ensure_kube_control_plane_directories.yml
@@ -30,10 +38,3 @@
   import_tasks: ensure_cluser_roles.yml
   tags: ['ensure_cluser_roles']
 
-- name: Ensure lo interface
-  import_tasks: ensure_lo_interface.yml
-  tags: ['ensure_lo_interface']
-
-- name: Configure ExaBGP
-  import_tasks: configure_exabgp.yml
-  tags: ['config_exabgp']
