@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import httplib
+import socket
+from sys import stdout
+from time import sleep
+
+def is_alive(host, path="/", port={{ kube_apiserver_insecure_port }}, timeout=2):
+    """ This function retreives the status code of a website by requesting
+        HEAD data from the host. This means that it only requests the headers.
+        If the host cannot be reached or something else goes wrong, it returns
+        None instead.
+    """
+    try:
+        conn = httplib.HTTPConnection(host, port, timeout)
+        conn.request("GET", path)
+        conn.sock.settimeout(2)
+        return conn.getresponse().status == 200
+    except (StandardError, socket.error) as err:
+        return False
+    finally:
+        conn.close()
+
+while True:
+    if is_alive('127.0.0.1', "/", {{ kube_apiserver_insecure_port }} ):
+        stdout.write('announce route {{ kube_apiserver_ip }}/32 next-hop {{ ansible_ssh_host }} community {{ bgp_peer_asn }}:1' + '\n')
+        stdout.flush()
+    else:
+        stdout.write('withdraw route {{ kube_apiserver_ip }}/32 next-hop {{ ansible_ssh_host }} community {{ bgp_peer_asn }}:1' + '\n')
+        stdout.flush()
+    sleep(5)

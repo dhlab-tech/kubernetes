@@ -1,2 +1,0 @@
-kube_version: "1.13.3"
-kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubectl"

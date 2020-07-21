@@ -6,29 +6,21 @@
   import_tasks: install_cni_binaries.yml
   tags: ['install_cni_binaries']
 
-- name: Install calico plguin CNI binaries
+- name: Install calico plugin CNI binaries
   import_tasks: install_calico_plugin.yml
   tags: ['install_calico_plugin']
-
-- name: Install prerequisites for crio build
-  import_tasks: install_crio_dependencies.yml
-  tags: ['install_crio_dependencies']
-
-- name: Build CRI-O binaries
-  import_tasks: build_crio_binaries.yml
-  tags: ['build_crio_binaries']
 
 - name: Install CRI-O binaries
   import_tasks: install_crio_binaries.yml
   tags: ['install_crio_binaries']
 
-- name: Download runc binary
-  import_tasks: download_runc.yml
-  tags: ['download_runc']
+- name: Install runc binary
+  import_tasks: install_runc.yml
+  tags: ['install_runc']
 
-- name: Download crictl binary
-  import_tasks: download_crictl.yml
-  tags: ['download_crictl']
+- name: Install crictl binary
+  import_tasks: install_crictl.yml
+  tags: ['install_crictl']
 
 - name: Ensure config
   import_tasks: ensure_crio_config.yml

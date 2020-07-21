@@ -1,0 +1,5 @@
+- name: Install kube-proxy binary
+  copy:
+    src: "kube-proxy"
+    dest: "/usr/bin/kube-proxy"
+    mode: 0755

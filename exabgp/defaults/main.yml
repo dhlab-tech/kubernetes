@@ -1,0 +1,15 @@
+---
+# defaults file for exabgp
+exabgp_user: nobody
+exabgp_group: nogroup
+exabgp_pid_file: /var/run/exabgp/exabgp.pid
+exabgp_version: 3.4.10
+exabgp_env:
+  exabgp.daemon:
+    daemonize: true
+    pid: "{{ exabgp_pid_file }}"
+  exabgp.log:
+    all: true
+    enable: true
+    destination: syslog
+exabgp_conf: []
