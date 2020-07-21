@@ -1,6 +1,9 @@
-dns_ip_addr: 10.20.112.10
+dns_ip_addr: "{{ omit }}"
 cluster_name: "{{ omit }}"
 dns_domain: "{{ cluster_name }}"
 kube_dir: /etc/kubernetes
 kube_apiserver_ip: "{{ omit }}"
 kube_apiserver_port: 6443
+health_port: 8091
+ready_port: 8092
+prometheus_port: 9153
