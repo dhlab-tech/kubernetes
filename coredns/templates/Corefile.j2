@@ -1,7 +1,7 @@
 .:53 {
     errors
-    health
-    ready
+    health localhost:8091
+    ready localhost:8092
     kubernetes {{ dns_domain }} cluster.local in-addr.arpa ip6.arpa {
       endpoint https://{{ kube_apiserver_ip }}:{{ kube_apiserver_port }}
       tls {{ kube_dir }}/ssl/kubernetes.pem {{ kube_dir }}/ssl/kubernetes-key.pem {{ kube_dir }}/ssl/ca.pem
@@ -10,7 +10,7 @@
       fallthrough in-addr.arpa ip6.arpa
     }
     prometheus :9153
-    forward . /run/systemd/resolve/resolv.conf
+    forward . /etc/resolv.conf
     cache 30
     loop
     reload
