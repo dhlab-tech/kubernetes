@@ -5,7 +5,6 @@
     state: present
 
 - name: Add OverlayFS kernel module to /etc/modules
-  when: ansible_distribution == 'Debian'
   lineinfile:
     path: /etc/modules
     line: 'overlay'
