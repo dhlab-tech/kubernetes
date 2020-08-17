@@ -24,6 +24,7 @@ ExecStart=/usr/bin/kubelet \
   --tls-private-key-file={{ kube_cert_dir }}/{{ inventory_hostname }}-key.pem \
   --cni-conf-dir={{ cni_conf_dir }} \
   --cni-bin-dir={{ cni_bin_dir }} \
+  --fail-swap-on=false \
   --v=2
 Restart=on-failure
 RestartSec=5
