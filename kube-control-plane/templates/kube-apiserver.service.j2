@@ -5,6 +5,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/bin/kube-apiserver \
   --advertise-address={{ ansible_default_ipv4.address }} \
+  --allow-privileged=true \
   --apiserver-count={{ groups['kubemasters'] | length }} \
   --authorization-mode=Node,RBAC \
   --bind-address=0.0.0.0 \
