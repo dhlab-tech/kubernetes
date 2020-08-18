@@ -259,6 +259,8 @@ spec:
         # host.
         - name: calico-node
           image: calico/node:v3.8.1
+          securityContext:
+            privileged: true
           env:
             # The location of the etcd cluster.
             - name: ETCD_ENDPOINTS
