@@ -1,0 +1,8 @@
+---
+- name: Ensure coredns services
+  systemd:
+    name: coredns
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  listen: ensure coredns systemd

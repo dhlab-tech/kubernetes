@@ -1,25 +1,29 @@
 ---
-- name: Register key
-  shell: cat {{ kube_dir }}/ssl/kubernetes-key.pem | base64 -w 0
-  register: kubernetes_key_pem
+- name: Install coredns binary
+  unarchive:
+    src: "{{ coredns_link }}"
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
 
-- name: Change kube-apiserver key
-  shell: sed -i "s|__APISERVER_KEY__|{{ kubernetes_key_pem.stdout }}|g" {{ workdir_coredns.path }}/coredns.yaml
+- name: Ensure Corefile
+  template:
+    src: "Corefile.j2"
+    dest: "/etc/Corefile"
+    mode: 0644
+  notify: ensure coredns systemd
 
-- name: Register cert
-  shell: cat {{ kube_dir }}/ssl/kubernetes.pem | base64 -w 0
-  register: kubernetes_pem
+- name: Ensure coreDNS service
+  template:
+    src: "coredns.service.j2"
+    dest: "/etc/systemd/system/coredns.service"
+    mode: 0644
+  notify: ensure coredns systemd
 
-- name: Change kube-apiserver cert
-  shell: sed -i "s|__APISERVER_CRT__|{{ kubernetes_pem.stdout }}|g" {{ workdir_coredns.path }}/coredns.yaml
-
-- name: Register ca
-  shell: cat {{ kube_dir }}/ssl/ca.pem | base64 -w 0
-  register: ca_pem
-
-- name: Change kube-apiserver ca
-  shell: sed -i "s|__APISERVER_CA__|{{ ca_pem.stdout }}|g" {{ workdir_coredns.path }}/coredns.yaml
-
-- name: Apply coreDNS
-  shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns.yaml"
-  run_once: True
+- name: Stop systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
