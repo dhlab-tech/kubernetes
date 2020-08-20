@@ -1,0 +1,6 @@
+---
+- name: Install Docker
+  import_tasks: install.yml
+  when: '"docker-ce" not in ansible_facts.packages'
+- name: Configure Docker
+  import_tasks: configure.yml

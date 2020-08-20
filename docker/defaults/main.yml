@@ -1,0 +1,16 @@
+---
+docker:
+  repo_line: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+  repo_key: "https://download.docker.com/linux/debian/gpg"
+  package: docker-ce
+  version: "5:19.03.*"
+
+docker_pip:
+  package: docker
+  version: 4.0.2
+
+docker_conf:
+  log-driver: json-file
+  log-opts:
+    max-size: "2g"
+    max-file: "5"
