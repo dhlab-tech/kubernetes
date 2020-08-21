@@ -1,4 +1,11 @@
 ---
+- name: Install iptables
+  apt:
+    name: "{{ firewall_pkgs }}"
+    update_cache: no
+  when: firewall_pkgs is not subset(ansible_facts.packages)
+  tags: ['ensure_iptables_rules']
+
 - name: Iptables | Merge default values with user ones
   set_fact:
     iptables: "{{ iptables_defaults | combine(iptables) }}"
