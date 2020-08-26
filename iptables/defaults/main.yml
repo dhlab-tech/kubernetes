@@ -1,8 +1,9 @@
 ---
-iptables_pkgs:
+firewall_pkgs:
   - iptables
   - netfilter-persistent
   - ipset
+
 iptables: {}
 iptables_defaults:
   # Enable whole role
