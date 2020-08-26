@@ -1,5 +1,5 @@
 ---
-- name: Set environment up:
+- name: Set environment up
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -16,7 +16,7 @@
 - name: Ensure systemd services
   template:
     src: "{{ item.src }}"
-    dest: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     mode: "0644"
   with_items:
     - src: "kube-apiserver.service.j2"
@@ -35,7 +35,7 @@
     name: "{{ item }}"
     state: started
     enabled: yes
-  with_tems:
+  with_items:
     - kube-apiserver
     - kube-controller-manager
     - kube-scheduler
