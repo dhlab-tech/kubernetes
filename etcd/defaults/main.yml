@@ -1,4 +1,24 @@
+---
 etcd_dir: "/etc/etcd"
 etcd_data_dir: "/var/lib/etcd"
 etcd_client_port: 2379
 etcd_peer_port: 2380
+
+etcd_args:
+  name: "{{inventory_hostname}}"
+  cert-file: "{{etcd_dir}}/kubernetes.pem"
+  key-file: "{{etcd_dir}}/kubernetes-key.pem"
+  peer-cert-file: "{{etcd_dir}}/kubernetes.pem"
+  peer-key-file: "{{etcd_dir}}/kubernetes-key.pem"
+  trusted-ca-file: "{{etcd_dir}}/ca.pem"
+  peer-trusted-ca-file: "{{etcd_dir}}/ca.pem"
+  peer-client-cert-auth: yes
+  client-cert-auth: yes
+  initial-advertise-peer-urls: "https://{{ansible_default_ipv4.address}}:{{ etcd_peer_port }}"
+  listen-peer-urls: "https://{{ansible_default_ipv4.address}}:{{ etcd_peer_port }}"
+  listen-client-urls: "https://{{ansible_default_ipv4.address}}:{{ etcd_client_port }},http://127.0.0.1:{{ etcd_client_port }}"
+  advertise-client-urls: "https://{{ansible_default_ipv4.address}}:{{ etcd_client_port }}"
+  initial-cluster-token: etcd-cluster-0
+  initial-cluster: "{% for member in groups['etcd'] %}{{member}}=https://{{hostvars[member]['ansible_default_ipv4']['address']}}:{{ etcd_peer_port }}{% if not loop.last %},{% endif %}{% endfor %}"
+  initial-cluster-state: new
+  data-dir: "{{etcd_data_dir}}"
