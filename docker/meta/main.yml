@@ -15,3 +15,5 @@ galaxy_info:
 allow_duplicates: no
 dependencies:
   - name: basic
+    tags:
+      - always
