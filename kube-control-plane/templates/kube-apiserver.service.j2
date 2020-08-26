@@ -3,34 +3,8 @@ Description=Kubernetes API Server
 Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
-ExecStart=/usr/bin/kube-apiserver \
-  --advertise-address={{ ansible_default_ipv4.address }} \
-  --allow-privileged=true \
-  --apiserver-count={{ groups['kubemasters'] | length }} \
-  --authorization-mode=Node,RBAC \
-  --bind-address=0.0.0.0 \
-  --client-ca-file={{ kube_cert_dir }}/ca.pem \
-  --etcd-cafile={{ kube_cert_dir }}/ca.pem \
-  --etcd-certfile={{ kube_cert_dir }}/kubernetes.pem \
-  --etcd-keyfile={{ kube_cert_dir }}/kubernetes-key.pem \
-  --etcd-servers={% for member in groups['etcd'] %}https://{{ hostvars[member].ansible_default_ipv4.address }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
-  --event-ttl=1h \
-  --encryption-provider-config={{ kube_dir }}/encryption-config.yaml \
-  --insecure-bind-address=127.0.0.1 \
-  --insecure-port=8080 \
-  --secure-port={{ kube_apiserver_port }} \
-  --kubelet-certificate-authority={{ kube_cert_dir }}/ca.pem \
-  --kubelet-client-certificate={{ kube_cert_dir }}/kubernetes.pem \
-  --kubelet-client-key={{ kube_cert_dir }}/kubernetes-key.pem \
-  --kubelet-https=true \
-  --runtime-config=api/all \
-  --service-account-key-file={{ kube_cert_dir }}/ca-key.pem \
-  --service-cluster-ip-range={{ kube_service_addresses }} \
-  --service-node-port-range={{ node_port_range }} \
-  --tls-cert-file={{ kube_cert_dir }}/kubernetes.pem \
-  --tls-private-key-file={{ kube_cert_dir }}/kubernetes-key.pem \
-  --token-auth-file= {{ kube_dir }}/token.auth \
-  --v=1
+ExecStart=/usr/bin/kube-apiserver $KUBE_APISERVER_ARGS
+EnvironmentFile=/etc/default/kube-apiserver
 Restart=on-failure
 RestartSec=5
 

@@ -1,0 +1,11 @@
+---
+kube_dir: "/etc/kubernetes"
+kube_cert_dir: "/etc/kubernetes/ssl"
+kube_service_addresses: 10.20.112.0/20
+node_port_range: "30000-32767"
+pod_cidr: 192.168.0.0/16
+node_cidr_mask_size: 23
+cluster_name: "{{ omit }}"
+local_asn: "{{ omit }}"
+bgp_peer_asn: "{{ omit }}"
+bgp_peer_ip: "{{ omit }}"

@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: cert
+      tags:
+        - install_cfssl
+        - install_cfssljson
+        - create_certs_directories
+  vars:
+    cfssl_install_path: /usr/local/bin

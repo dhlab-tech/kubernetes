@@ -1,0 +1,14 @@
+---
+- name: Make sure installation path and cert dirs exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ cfssl_install_path }}"
+    - "{{ certdir }}"
+- name: Install cfssl
+  get_url:
+    url: "{{ item.value }}"
+    dest: "{{ cfssl_install_path }}/{{ item.key }}"
+    mode: 0755
+  with_items: "{{ cfssl_download_urls | dict2items }}"
