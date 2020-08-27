@@ -12,7 +12,7 @@
 - name: Ensure systemd unit file for kubelet
   template:
     src: kubelet.service.j2
-    dest: /lib/systemd/system/kubelet.service
+    dest: /etc/systemd/system/kubelet.service
     mode: 0644
 - name: Reload systemd
   systemd:
