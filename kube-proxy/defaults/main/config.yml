@@ -1,0 +1,13 @@
+---
+kube_proxy_args:
+  config: /var/lib/kube-proxy/kube-proxy-config.yaml
+  master: "https://{{ kube_apiserver_ip | default('localhost') }}:{{ kube_apiserver_port | default('6443') }}"
+  v: 2
+
+kube_proxy_config:
+  kind: KubeProxyConfiguration
+  apiVersion: kubeproxy.config.k8s.io/v1alpha1
+  clientConnection:
+    kubeconfig: /var/lib/kube-proxy/kubeconfig
+  mode: iptables
+  clusterCIDR: "{{ pod_cidr }}"

@@ -1,0 +1,21 @@
+---
+- name: Ensure kube-proxy env vars
+  template:
+    src: kube-proxy.env.j2
+    dest: /etc/default/kube-proxy
+    mode: "0644"
+  notify: restart kube-proxy
+- name: Create kube-proxy dirs if not exist
+  file:
+    path: /var/lib/kube-proxy
+    state: directory
+- name: Ensure kubeproxy kubeconfig
+  copy:
+    src: "{{ kube_dir }}/kube-proxy.kubeconfig"
+    dest: /var/lib/kube-proxy/kubeconfig
+    remote_src: yes
+- name: Ensure kubeproxy config
+  copy:
+    content: "{{ kube_proxy_config | to_nice_yaml(indent=2) }}"
+    dest: /var/lib/kube-proxy/kube-proxy-config.yaml
+    mode: "0644"
