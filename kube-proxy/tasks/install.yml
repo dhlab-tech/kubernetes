@@ -2,7 +2,7 @@
 - name: Install kube-proxy binary
   get_url:
     url: "{{ kube_proxy_url }}"
-    dest: /usr/bin/kube-proxy
+    dest: /usr/local/bin/kube-proxy
     owner: root
     group: root
     mode: "0755"
