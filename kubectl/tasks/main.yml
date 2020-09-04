@@ -1,6 +1,9 @@
+---
 - name: Install kubectl binary
-  copy:
-    src: "kubectl"
-    dest: "/usr/local/bin/kubectl"
-    mode: 0755
-  tags: ['install_kubectl']
+  get_url:
+    url: "{{ kubectl_url }}"
+    dest: /usr/local/bin/kubectl
+    owner: root
+    group: root
+    mode: "0755"
+  tags: [ install_kubectl ]
