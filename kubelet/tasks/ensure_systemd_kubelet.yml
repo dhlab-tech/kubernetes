@@ -6,21 +6,24 @@
 - name: Ensure kubelet env vars
   template:
     src: kubelet.env.j2
-    dest: "{{ kube_dir }}/kubelet.env"
+    dest: "/etc/default/kubelet"
     mode: 0644
+  notify: restart kubelet
 - name: Ensure systemd unit file for kubelet
   template:
     src: kubelet.service.j2
-    dest: /lib/systemd/system/kubelet.service
+    dest: /etc/systemd/system/kubelet.service
     mode: 0644
+- name: Reload systemd
+  systemd:
+   daemon-reload: yes
 - name: Stop systemd-resolved
   systemd:
     name: systemd-resolved
     state: stopped
     enabled: no
 - name: Ensure kubelet systemd service
-  systemd:
+  service:
     name: kubelet
-    state: restarted
-    daemon_reload: yes
+    state: started
     enabled: yes

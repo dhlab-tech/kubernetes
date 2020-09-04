@@ -1,3 +1,6 @@
+---
+coredns_version: 1.6.2
+
 dns_ip_addr: "{{ omit }}"
 cluster_name: "{{ omit }}"
 dns_domain: "{{ cluster_name }}"

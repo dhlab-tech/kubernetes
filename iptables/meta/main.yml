@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Stanislaw Bogatkin
   description: Ansible role to install and configure iptables
@@ -14,6 +15,7 @@ galaxy_info:
 
   galaxy_tags: [iptables, firewall]
 
-dependencies: []
-  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
-  # if you add dependencies to this list.
+dependencies:
+  - name: basic
+    tags:
+      - always

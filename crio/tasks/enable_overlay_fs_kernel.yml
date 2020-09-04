@@ -1,9 +1,0 @@
----
-- name: Enable OverlayFS kernel module
-  modprobe:
-    name: overlay
-    state: present
-- name: Add OverlayFS kernel module to /etc/modules
-  lineinfile:
-    path: /etc/modules
-    line: 'overlay'

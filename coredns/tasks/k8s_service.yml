@@ -1,0 +1,16 @@
+---
+- name: CoreDNS | Ensure temporary directory
+  tempfile:
+    state: directory
+    suffix: coredns
+  register: workdir_coredns
+
+- name: Ensure coreDNS service
+  template:
+    src: "coredns_service.yaml.j2"
+    dest: "{{ workdir_coredns.path }}/coredns_service.yaml"
+    mode: 0644
+
+- name: Apply coreDNS
+  shell: "kubectl apply -f {{ workdir_coredns.path }}/coredns_service.yaml"
+  run_once: True

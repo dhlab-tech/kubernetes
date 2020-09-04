@@ -1,11 +1,4 @@
-- name: Iptables | Install iptables
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - iptables
-    - netfilter-persistent
-
+---
 - name: Iptables | Ensure that netfilter-persistent plugins directory exists
   file:
     path: /usr/share/netfilter-persistent/plugins.d/

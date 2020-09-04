@@ -1,27 +1,41 @@
 ---
-- name: Ensure systemd apiserver service
+- name: Set environment up
   template:
-    src: "kube-apiserver.service.j2"
-    dest: "/lib/systemd/system/kube-apiserver.service"
-    mode: 0644
-- name: Ensure systemd controller manager service
-  template:
-    src: "kube-controller-manager.service.j2"
-    dest: "/lib/systemd/system/kube-controller-manager.service"
-    mode: 0644
-- name: Ensure systemd scheduler service
-  template:
-    src: "kube-scheduler.service.j2"
-    dest: "/lib/systemd/system/kube-scheduler.service"
-    mode: 0644
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+  with_items:
+    - src: kube-apiserver.env.j2
+      dest: /etc/default/kube-apiserver
+    - src: kube-controller-manager.env.j2
+      dest: /etc/default/kube-controller-manager
+    - src: kube-scheduler.env.j2
+      dest: /etc/default/kube-scheduler
+  notify: restart control plane
 
 - name: Ensure systemd services
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+  with_items:
+    - src: "kube-apiserver.service.j2"
+      dest: "/etc/systemd/system/kube-apiserver.service"
+    - src: "kube-controller-manager.service.j2"
+      dest: "/etc/systemd/system/kube-controller-manager.service"
+    - src: "kube-scheduler.service.j2"
+      dest: "/etc/systemd/system/kube-scheduler.service"
+
+- name: Reload systemd
   systemd:
+    daemon_reload: yes
+
+- name: Configure systemd services
+  service:
     name: "{{ item }}"
     state: started
-    daemon_reload: yes
     enabled: yes
-  loop:
+  with_items:
     - kube-apiserver
     - kube-controller-manager
     - kube-scheduler

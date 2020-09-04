@@ -1,31 +1,12 @@
 [Unit]
 Description=Kubernetes Kubelet
 Documentation=https://github.com/kubernetes/kubernetes
-After=crio.service
-Requires=crio.service
+After=docker.service
+Requires=docker.service
 
 [Service]
-ExecStart=/usr/bin/kubelet \
-  --anonymous-auth=false \
-  --authorization-mode=Webhook \
-  --client-ca-file={{ kube_cert_dir }}/ca.pem \
-  --cloud-provider= \
-  --cluster-dns={{ dns_ip_addr }} \
-  --resolv-conf=/etc/resolv.conf \
-  --cluster-domain={{ dns_domain }} \
-  --container-runtime=remote \
-  --container-runtime-endpoint=unix:///var/run/crio/crio.sock \
-  --image-pull-progress-deadline=2m \
-  --kubeconfig={{ kube_dir }}/{{ inventory_hostname }}.kubeconfig \
-  --network-plugin=cni \
-  --register-node=true \
-  --runtime-request-timeout=15m \
-  --tls-cert-file={{ kube_cert_dir }}/{{ inventory_hostname }}.pem \
-  --tls-private-key-file={{ kube_cert_dir }}/{{ inventory_hostname }}-key.pem \
-  --cni-conf-dir={{ cni_conf_dir }} \
-  --cni-bin-dir={{ cni_bin_dir }} \
-  --fail-swap-on=false \
-  --v=2
+ExecStart=/usr/bin/kubelet $KUBELET_OPTS
+EnvironmentFile=/etc/default/kubelet
 Restart=on-failure
 RestartSec=5
 

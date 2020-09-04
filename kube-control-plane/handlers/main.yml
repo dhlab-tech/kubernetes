@@ -1,0 +1,10 @@
+---
+- name: Restart k8s control plane
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+  listen: restart control plane
