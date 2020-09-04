@@ -1,19 +1,18 @@
+---
 - name: Install kube-proxy
-  import_tasks: install_kube_proxy.yml
-  tags: ['install_kube_proxy']
-
-- name: Settigs for kube-proxy
-  import_tasks: ensure_kube_proxy_settings.yml
-  tags: ['ensure_kube_proxy_settings']
-
+  import_tasks: install.yml
+  tags:
+    - install_kube_proxy
+    - ensure_systemd_kube_proxy
+- name: Set up kube config for kube-proxy
+  import_tasks: kube_config.yml
+  tags: [ ensure_kube_proxy_settings ]
 - name: Ensure config for kube-proxy and kubeconfig
-  import_tasks: ensure_config_kube_proxy.yml
-  tags: ['ensure_config_kube_proxy']
-
-- name: Ensure systemd kube-proxy
-  import_tasks: ensure_systemd_kube_proxy.yml
-  tags: ['ensure_systemd_kube_proxy']
-
-- name: Check systemd kube-proxy
-  import_tasks: check_systemd.yml
-  tags: ['check_systemd_kube_proxy']
+  import_tasks: configure.yml
+  tags: [ ensure_config_kube_proxy ]
+- name: Start kube-proxy if not running yet
+  service:
+    name: kube-proxy
+    enabled: yes
+    state: started
+  tags: [ check_systemd_kube_proxy ]

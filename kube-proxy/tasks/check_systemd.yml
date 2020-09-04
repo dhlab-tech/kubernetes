@@ -1,3 +1,0 @@
-- name: status kube-proxy.service
-  command: systemctl show -p ActiveState --value kube-proxy.service
-  become: yes

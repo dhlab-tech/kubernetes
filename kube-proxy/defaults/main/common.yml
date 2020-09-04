@@ -1,0 +1,9 @@
+---
+k8s_version: v1.15.5
+kube_proxy_url: "https://storage.googleapis.com/kubernetes-release/release/{{ k8s_version }}/bin/linux/amd64/kube-proxy"
+pod_cidr: 192.168.0.0/16
+kube_apiserver_ip: "{{ omit }}"
+kube_apiserver_port: 6443
+cluster_name: "{{ omit }}"
+kube_dir: "/etc/kubernetes"
+kube_cert_dir: "/etc/kubernetes/ssl"

@@ -1,6 +1,0 @@
-pod_cidr: 192.168.0.0/16
-kube_apiserver_ip: "{{ omit }}"
-kube_apiserver_port: 6443
-cluster_name: "{{ omit }}"
-kube_dir: "/etc/kubernetes"
-kube_cert_dir: "/etc/kubernetes/ssl"

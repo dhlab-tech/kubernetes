@@ -1,0 +1,16 @@
+---
+- name: Install kube-proxy binary
+  get_url:
+    url: "{{ kube_proxy_url }}"
+    dest: /usr/bin/kube-proxy
+    owner: root
+    group: root
+    mode: "0755"
+- name: Generate kube-proxy systemd unit file
+  template:
+    src: "kube-proxy.service.j2"
+    dest: "/etc/systemd/system/kube-proxy.service"
+    mode: "0644"
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
