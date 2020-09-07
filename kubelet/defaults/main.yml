@@ -1,4 +1,5 @@
 ---
+k8s_version: v1.15.5
 cluster_name: "{{ omit }}"
 kube_dir: "/etc/kubernetes"
 kube_cert_dir: "/etc/kubernetes/ssl"
@@ -8,7 +9,8 @@ cni_conf_dir: "/etc/cni/net.d"
 cni_bin_dir: "/opt/cni/bin"
 kube_apiserver_ip: "{{ omit }}"
 kube_apiserver_port: 6443
-kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/v1.15.5/bin/linux/amd64/kubelet"
+
+kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/{{ k8s_version }}/bin/linux/amd64/kubelet"
 cni: "calico"
 
 kubelet_args:
