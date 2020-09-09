@@ -10,6 +10,7 @@
     src: "calico-etcd.yaml.j2"
     dest: "{{ workdir.path }}/calico-etcd.yaml"
     mode: 0644
+  run_once: True
 
 - name: Register key
   shell: cat {{ kube_dir }}/ssl/kubernetes-key.pem | base64 -w 0

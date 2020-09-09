@@ -1,0 +1,6 @@
+---
+- name: Copy runc binary
+  copy:
+    src: "runc.amd64"
+    dest: /usr/bin/runc
+    mode: 0755

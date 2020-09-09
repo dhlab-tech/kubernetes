@@ -1,0 +1,11 @@
+---
+- name: Check if CFSSLjson binary already installed
+  stat:
+    path: "{{ cfssl_json_install_path }}/cfssljson"
+  register: cfssljson
+- name: Download CFSSLjson binary
+  get_url:
+    url: "{{ cfssl_json_binary_url }}"
+    dest: "{{ cfssl_json_install_path }}/cfssljson"
+    mode: 0755
+  when: not cfssljson.stat.exists

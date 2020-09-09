@@ -1,8 +1,3 @@
----
-- name: Populate service facts
-  service_facts:
-
-- name: Fail if kubelet not running
-  fail:
-    msg: Kubelet is not running
-  when: ansible_facts.services['kubelet.service'].state != 'running'
+- name: status kubelet.service
+  command: systemctl show -p ActiveState --value kubelet.service
+  become: yes

@@ -3,12 +3,12 @@
   tempfile:
     state: directory
     suffix: kube-control-plane
-  register: kube_control_plane_workdir
+  register: kube-control-plane-workdir
 - name: Ensure k8s dir
   file:
     path: "{{ kube_dir }}"
     state: directory
-- name: Ensure user systemd
+- name: Ensure user systemd 
   file:
     path: "/usr/lib/systemd/system"
     state: directory

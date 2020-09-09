@@ -1,0 +1,10 @@
+---
+- name: Ensure certdir if not exists
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ certdir }}"
+    - "{{ cfssl_install_path }}"
+    - "{{ cfssl_json_install_path }}"
+

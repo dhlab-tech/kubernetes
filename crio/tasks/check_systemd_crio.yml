@@ -1,0 +1,3 @@
+- name: status crio
+  command: systemctl show -p ActiveState --value crio
+  become: yes

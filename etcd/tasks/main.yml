@@ -1,4 +1,3 @@
----
 - name: Download etcd and etcdctl
   import_tasks: download_etcd.yml
   tags: ['download_etcd']

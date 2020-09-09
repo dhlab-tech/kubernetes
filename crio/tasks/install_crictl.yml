@@ -1,0 +1,6 @@
+---
+- name: Install crictl binary
+  copy:
+    src: "crictl"
+    dest: /usr/local/bin/crictl
+    mode: 0755

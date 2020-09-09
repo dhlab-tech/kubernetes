@@ -1,0 +1,2 @@
+cni_conf_dir: "/etc/cni/net.d"
+cni_bin_dir: "/opt/cni/bin"

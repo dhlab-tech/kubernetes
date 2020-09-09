@@ -1,0 +1,18 @@
+---
+- name: Ensure kubeDNS config
+  template:
+    src: "kubedns.yaml.j2"
+    dest: "/var/tmp/kubedns.yaml"
+    mode: 0644
+  run_once: True
+  tags: ["config_kubedns"]
+
+- name: Apply kubeDNS
+  shell: kubectl apply -f /var/tmp/kubedns.yaml
+  run_once: True
+  tags: ["install_kubends"]
+
+- name: Delete kubeDNS
+  shell: kubectl delete -f /var/tmp/kubedns.yaml
+  run_once: True
+  tags: ["delete_kubends"]

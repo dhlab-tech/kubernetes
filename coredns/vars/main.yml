@@ -1,3 +1,0 @@
----
-coredns_link: |
-  https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_amd64.tgz
