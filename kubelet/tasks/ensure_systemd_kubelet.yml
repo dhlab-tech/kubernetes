@@ -1,12 +1,12 @@
 ---
-- name: "Create cni config dir if not exist"
+- name: Create cni config dir if not exist
   file:
     path: "{{ cni_conf_dir }}"
     state: directory
 - name: Ensure kubelet env vars
   template:
     src: kubelet.env.j2
-    dest: "/etc/default/kubelet"
+    dest: /etc/default/kubelet
     mode: 0644
   notify: restart kubelet
 - name: Ensure systemd unit file for kubelet
