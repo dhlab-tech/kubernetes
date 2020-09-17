@@ -1,3 +1,13 @@
+---
+basic_packages:
+  - apt-transport-https
+  - aptitude
+  - dirmngr
+  - git
+  - python3-minimal
+  - python3-pip
+  - unzip
+
 kube_dir: "/etc/kubernetes"
 kube_cert_dir: "/etc/kubernetes/ssl"
 etcd_dir: "/etc/etcd"

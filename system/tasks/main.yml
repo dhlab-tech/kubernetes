@@ -1,26 +1,36 @@
-- name: Update
+---
+- name: Install some basic stuff
   apt:
+    name: "{{ basic_packages }}"
     update_cache: yes
-  tags: ["system_update"]
-
+    cache_valid_time: 86400
+  tags: [system_update]
+- name: "Get package facts"
+  package_facts:
+    manager: "apt"
+  tags: [system_update]
 - name: Add all hosts from inventory to /etc/hosts
   lineinfile:
-    dest: "/etc/hosts"
+    dest: /etc/hosts
     regexp: "^.+ {{ item }}$"
     line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{  item  }}"
-  with_items: "{{  groups['kubemasters'] | union(groups['kubenodes']) | union(groups['etcd']) | unique  }}"
-  tags: ["add_all_hosts_from_inventory"]
-
+  with_items: >-
+    {{ groups['kubemasters']
+      | union(groups['kubenodes'])
+      | union(groups['etcd'])
+      | unique }}
+  when: "['kubemasters', 'kubenodes', 'etcd'] is subset('groups')"
+  tags: [add_all_hosts_from_inventory]
 - name: Create necessary dirs
   file:
     path: "{{ item }}"
     state: directory
     mode: 0755
   with_items:
-     - "{{ kube_dir }}"
-     - "{{ kube_cert_dir }}"
-     - "{{ etcd_dir }}"
-     - "{{ etcd_data_dir }}"
-     - "{{ cni_conf_dir }}"
-     - "{{ cni_bin_dir }}"
-  tags: ["create_necessary_dirs"]
+    - "{{ kube_dir }}"
+    - "{{ kube_cert_dir }}"
+    - "{{ etcd_dir }}"
+    - "{{ etcd_data_dir }}"
+    - "{{ cni_conf_dir }}"
+    - "{{ cni_bin_dir }}"
+  tags: [create_necessary_dirs]
