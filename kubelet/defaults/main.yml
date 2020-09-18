@@ -21,6 +21,8 @@ kubelet_args:
   cluster-dns: "{{ dns_ip_addr }}"
   cluster-domain: "{{ dns_domain }}"
   container-runtime: docker
+  eviction-hard: >-
+    imagefs.available<20%,memory.available<100Mi,nodefs.available<15%,nodefs.inodesFree<5%
   image-pull-progress-deadline: 2m
   kubeconfig: "{{ kube_dir }}/{{ inventory_hostname }}.kubeconfig"
   network-plugin: cni
