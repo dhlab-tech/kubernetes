@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - name: docker
+    - name: kubectl
+    - name: kubelet
+      tags:
+        - install_kubelet
+        - ensure_systemd_kubelet
