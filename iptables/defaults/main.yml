@@ -21,11 +21,7 @@ iptables_defaults:
   group_allowed_udp_ports: []
   host_allowed_udp_ports: []
   # Any raw rules can be added
-  raw_rules: [
-      '-I INPUT 1 -p tcp --dport {{ etcd_client_port }} -j ACCEPT -m comment --comment "etcd"',
-      '-I INPUT 1 -p tcp --dport {{ etcd_peer_port }} -j ACCEPT -m comment --comment "etcd"',
-      '-I INPUT 1 -p tcp --dport {{ kube_apiserver_port }} -j ACCEPT -m comment --comment "kubeproxy"',
-  ]
+  raw_rules: []
   # Deny all which were not explicitly allowed
   deny_all_unallowed: yes
   # Allow ICMP
