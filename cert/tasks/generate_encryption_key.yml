@@ -14,8 +14,8 @@
     encryption_key: "{{ encryption_key_cmd.stdout }}"
   when: not enc.stat.exists
 - name: Generate encryption-config.yaml
-  template:
-    src: "encryption-config.yaml.j2"
+  copy:
+    content: "{{ encryption_config | to_nice_yaml(indent=2) }}"
     dest: "{{ certdir }}/encryption-config.yaml"
     mode: 0644
   when: not enc.stat.exists

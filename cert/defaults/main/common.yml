@@ -1,0 +1,10 @@
+---
+cluster_name: k8s.infra
+kube_dir: /etc/kubernetes
+kube_cert_dir: /etc/kubernetes/ssl
+etcd_dir: /etc/etcd
+certdir: "cert/{{ cluster_name }}"
+kube_apiserver_ip: "{{ omit }}"
+kube_apiserver_internal_ip: >-
+  {{ kube_service_addresses | ipaddr('net') | ipaddr(1) | ipaddr('address') }}
+kube_service_addresses: 10.20.112.0/20

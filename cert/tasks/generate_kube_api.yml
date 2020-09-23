@@ -6,13 +6,12 @@
 - debug:
     var: api_ips
 - name: Generate csr for api
-  template:
-    src: "kubernetes-csr.json.j2"
+  copy:
+    content: "{{ kubernetes_csr | to_json }}"
     dest: "{{ certdir }}/kubernetes-csr.json"
     mode: 0644
-
 - name: Generate kube-api keys
-  shell: 
+  shell:
     cmd: |
       {{ cfssl_install_path }}/cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json \
         -hostname={{ kube_apiserver_ip }},{{ kube_apiserver_internal_ip }},{{ api_ips }}127.0.0.1,kubernetes.default,{{ cluster_name }} \

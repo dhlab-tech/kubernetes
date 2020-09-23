@@ -1,0 +1,16 @@
+---
+ca_config_signing_default_expiry: "87600h"
+ca_config_signing_profile_kubernetes_expiry: "87600h"
+
+ca_config:
+  signing:
+    default:
+      expiry: "{{ ca_config_signing_default_expiry }}"
+    profiles:
+      kubernetes:
+        expiry: "{{ ca_config_signing_profile_kubernetes_expiry }}"
+        usages:
+          - signing
+          - key encipherment
+          - server auth
+          - client auth

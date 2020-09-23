@@ -1,13 +1,12 @@
 ---
-- name: Generate csrs for nodes
-  template:
-    src: "node-csr.json.j2"
+- name: Generate CSRs for nodes
+  copy:
+    content: "{{ node_csr | to_json }}"
     dest: "{{ certdir }}/{{ kubenode }}-csr.json"
     mode: 0644
   loop: "{{ groups['kubenodes'] }}"
   loop_control:
     loop_var: kubenode
-
 - name: Initialize nodes exclusion facts
   set_fact:
     nodes_to_exclude: []

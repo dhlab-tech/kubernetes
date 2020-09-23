@@ -1,0 +1,10 @@
+---
+cfssl_version: 1.4.1
+
+cfssl_install_path: "{{ lookup('env', 'HOME') }}/.cache"
+cfssl_json_install_path: "{{ cfssl_install_path }}"
+
+cfssl_download_urls:
+  cfssl: "https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/cfssl_{{ cfssl_version }}_linux_amd64"
+  cfssljson: "https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/cfssljson_{{ cfssl_version }}_linux_amd64"
+  multirootca: "https://github.com/cloudflare/cfssl/releases/download/v{{ cfssl_version }}/multirootca_{{ cfssl_version }}_linux_amd64"

@@ -1,0 +1,65 @@
+---
+tls_location:
+  countrycode: RU
+  state: Moscow
+  locality: Moscow
+
+admin_csr:
+  cn: admin
+  key:
+    algo: rsa
+    size: 2048
+  names:
+    - c: "{{ tls_location.countrycode }}"
+      st: "{{ tls_location.state }}"
+      l: "{{ tls_location.locality }}"
+      o: "system:masters"
+      ou: it
+
+ca_csr:
+  cn: kubernetes
+  key:
+    algo: rsa
+    size: 2048
+  names:
+    - c: "{{ tls_location.countrycode }}"
+      st: "{{ tls_location.state }}"
+      l: "{{ tls_location.locality }}"
+      o: Kubernetes
+      ou: it
+
+kube_proxy_csr:
+  cn: "system:kube-proxy"
+  key:
+    algo: rsa
+    size: 2048
+  names:
+    - c: "{{ tls_location.countrycode }}"
+      st: "{{ tls_location.state }}"
+      l: "{{ tls_location.locality }}"
+      o: "system:node-proxier"
+      ou: it
+
+kubernetes_csr:
+  cn: "kubernetes"
+  key:
+    algo: rsa
+    size: 2048
+  names:
+    - c: "{{ tls_location.countrycode }}"
+      st: "{{ tls_location.state }}"
+      l: "{{ tls_location.locality }}"
+      o: Kubernetes
+      ou: it
+
+node_csr:
+  cn: "system:node:{{ kubenode }}"
+  key:
+    algo: rsa
+    size: 2048
+  names:
+    - c: "{{ tls_location.countrycode }}"
+      st: "{{ tls_location.state }}"
+      l: "{{ tls_location.locality }}"
+      o: "system:nodes"
+      ou: it

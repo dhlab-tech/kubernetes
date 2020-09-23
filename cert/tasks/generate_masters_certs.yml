@@ -4,8 +4,8 @@
     path: "{{ certdir }}/admin.pem"
   register: admin
 - name: Generate csr for masters
-  template:
-    src: "admin-csr.json.j2"
+  copy:
+    content: "{{ admin_csr | to_json }}"
     dest: "{{ certdir }}/admin-csr.json"
     mode: 0644
   when: not admin.stat.exists
