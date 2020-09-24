@@ -5,3 +5,5 @@ policy: yes
 networking: yes
 pod_cidr: 192.168.0.0/16
 calico_version: 3.8
+
+kube_cert_dir: /etc/kubernetes/ssl
