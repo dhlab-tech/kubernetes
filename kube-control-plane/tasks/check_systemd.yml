@@ -1,11 +1,11 @@
-- name: status kube-apiserver.service
-  command: systemctl show -p ActiveState --value kube-apiserver.service
-  become: yes
-
-- name: status kube-controller-manager.service
-  command: systemctl show -p ActiveState --value kube-controller-manager.service
-  become: yes
-
-- name: status kube-scheduler.service
-  command: systemctl show -p ActiveState --value kube-scheduler.service
-  become: yes
+---
+- name: Populate service facts
+  service_facts:
+- name: Fail if any of the services are not running
+  fail:
+    msg: Kubelet is not running
+  when: "ansible_facts.services[item].state != 'running'"
+  with_items:
+    - kube-apiserver.service
+    - kube-controller-manager.service
+    - kube-scheduler.service
