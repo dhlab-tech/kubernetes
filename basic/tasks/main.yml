@@ -1,9 +1,0 @@
----
-- name: "Install some basic stuff"
-  apt:
-    name: "{{ basic_packages }}"
-    update_cache: yes
-    cache_valid_time: 86400
-- name: "Get package facts"
-  package_facts:
-    manager: "apt"

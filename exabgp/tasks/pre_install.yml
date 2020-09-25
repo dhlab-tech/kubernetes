@@ -1,5 +1,5 @@
 - name: install pip
-  apt: name=python-pip
+  apt: name=python-pip state=installed
 
 - name: create exabgp config directory
   file: |

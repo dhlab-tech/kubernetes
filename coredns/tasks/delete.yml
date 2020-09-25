@@ -1,0 +1,4 @@
+---
+- name: Delete coreDNS
+  shell: "kubectl delete -f {{ workdir_coredns.path }}/coredns.yaml"
+  run_once: True

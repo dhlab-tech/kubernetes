@@ -1,10 +1,15 @@
 ---
+- name: Create certs directories
+  import_tasks: create_certs_directories.yml
+  tags: ['create_certs_directories']
+
 - name: Install CFSSL if not installed
-  import_tasks: install.yml
-  tags:
-    - install_cfssl
-    - install_cfssljson
-    - create_certs_directories
+  import_tasks: install_cfssl.yml
+  tags: ['install_cfssl']
+
+- name: Install CFSSLjson if not installed
+  import_tasks: install_cfssljson.yml
+  tags: ['install_cfssljson']
 
 - name: Generate ca certs
   import_tasks: generate_ca.yml

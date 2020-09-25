@@ -1,0 +1,12 @@
+---
+- name: Install calico binary
+  copy:
+    src: "calico-amd64"
+    dest: "{{ cni_bin_dir }}/calico"
+    mode: 0755
+
+- name: Install calico binary
+  copy:
+    src: "calico-ipam-amd64"
+    dest: "{{ cni_bin_dir }}/calico-ipam"
+    mode: 0755

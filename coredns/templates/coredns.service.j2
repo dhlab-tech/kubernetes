@@ -1,13 +1,10 @@
 [Unit]
 Description=Coredns service
 Documentation=https://github.com/coredns/coredns
-After=syslog.target
-After=network.target
 
 [Service]
-Type=simple
 ExecStart=/usr/local/bin/coredns \
-  --conf=/etc/Corefile
+  --conf=/etc/Corefile 
 Restart=on-failure
 RestartSec=5
 

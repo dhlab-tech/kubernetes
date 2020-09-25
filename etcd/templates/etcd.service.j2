@@ -3,8 +3,24 @@ Description=etcd
 Documentation=https://github.com/coreos
 
 [Service]
-ExecStart=/usr/bin/etcd $ETCD_ARGS
-EnvironmentFile=/etc/default/etcd
+ExecStart=/usr/bin/etcd \
+  --name {{inventory_hostname}} \
+  --cert-file={{etcd_dir}}/kubernetes.pem \
+  --key-file={{etcd_dir}}/kubernetes-key.pem \
+  --peer-cert-file={{etcd_dir}}/kubernetes.pem \
+  --peer-key-file={{etcd_dir}}/kubernetes-key.pem \
+  --trusted-ca-file={{etcd_dir}}/ca.pem \
+  --peer-trusted-ca-file={{etcd_dir}}/ca.pem \
+  --peer-client-cert-auth \
+  --client-cert-auth \
+  --initial-advertise-peer-urls https://{{ansible_default_ipv4.address}}:{{ etcd_peer_port }} \
+  --listen-peer-urls https://{{ansible_default_ipv4.address}}:{{ etcd_peer_port }} \
+  --listen-client-urls https://{{ansible_default_ipv4.address}}:{{ etcd_client_port }},http://127.0.0.1:{{ etcd_client_port }} \
+  --advertise-client-urls https://{{ansible_default_ipv4.address}}:{{ etcd_client_port }} \
+  --initial-cluster-token etcd-cluster-0 \
+  --initial-cluster {% for member in groups['etcd'] %}{{member}}=https://{{hostvars[member]['ansible_default_ipv4']['address']}}:{{ etcd_peer_port }}{% if not loop.last %},{% endif %}{% endfor %} \
+  --initial-cluster-state new \
+  --data-dir={{etcd_data_dir}}
 Restart=on-failure
 RestartSec=5
 

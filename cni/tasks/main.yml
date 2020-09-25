@@ -1,7 +1,0 @@
-- name: Install CNI binaries
-  import_tasks: install_cni_binaries.yml
-  tags: ['install_cni_binaries']
-
-- name: Install calico plugin CNI binaries
-  import_tasks: install_calico_plugin.yml
-  tags: ['install_calico_plugin']

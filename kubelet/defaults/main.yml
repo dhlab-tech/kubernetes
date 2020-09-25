@@ -1,4 +1,3 @@
----
 cluster_name: "{{ omit }}"
 kube_dir: "/etc/kubernetes"
 kube_cert_dir: "/etc/kubernetes/ssl"
@@ -10,24 +9,3 @@ kube_apiserver_ip: "{{ omit }}"
 kube_apiserver_port: 6443
 kubelet_url: "https://storage.googleapis.com/kubernetes-release/release/v1.15.5/bin/linux/amd64/kubelet"
 cni: "calico"
-
-kubelet_args:
-  anonymous-auth: "false"
-  authorization-mode: Webhook
-  client-ca-file: "{{ kube_cert_dir }}/ca.pem"
-  cloud-provider: ""
-  cluster-dns: "{{ dns_ip_addr }}"
-  cluster-domain: "{{ dns_domain }}"
-  container-runtime: docker
-  image-pull-progress-deadline: 2m
-  kubeconfig: "{{ kube_dir }}/{{ inventory_hostname }}.kubeconfig"
-  network-plugin: cni
-  register-node: "true"
-  resolv-conf: "/etc/resolv.conf"
-  runtime-request-timeout: "15m"
-  tls-cert-file: "{{ kube_cert_dir }}/{{ inventory_hostname }}.pem"
-  tls-private-key-file: "{{ kube_cert_dir }}/{{ inventory_hostname }}-key.pem"
-  cni-conf-dir: "{{ cni_conf_dir }}"
-  cni-bin-dir: "{{ cni_bin_dir }}"
-  fail-swap-on: "false"
-  v: 2
