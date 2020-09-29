@@ -1,8 +1,0 @@
----
-cluster_name: "k8s.local"
-certdir: "cert/{{ cluster_name }}"
-kube_apiserver_ip: "{{ omit }}"
-kube_master_port: 6443
-kubeconfig_path: "{{ lookup('env','HOME') }}/.kube/config"
-username: "admin"
-context: "k8s.local"
