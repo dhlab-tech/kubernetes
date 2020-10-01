@@ -3,6 +3,8 @@ cluster_name: "k8s.local"
 certdir: "cert/{{ cluster_name }}"
 kube_apiserver_ip: "{{ omit }}"
 kube_master_port: 6443
-kubeconfig_path: "{{ lookup('env','HOME') }}/.kube/config"
-username: "admin"
+kubeconfig_dir: "/root/.kube"
+kubeconfig_path: "{{ kubeconfig_dir }}/config"
 context: "k8s.local"
+k8s_pip:
+  - openshift == 0.11.2
