@@ -7,6 +7,7 @@ basic_packages:
   - python3-minimal
   - python3-pip
   - unzip
+  - virtualenv
 
 kube_dir: "/etc/kubernetes"
 kube_cert_dir: "/etc/kubernetes/ssl"
