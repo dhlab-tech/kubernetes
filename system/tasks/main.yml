@@ -19,7 +19,6 @@
       | union(groups['kubenodes'])
       | union(groups['etcd'])
       | unique }}
-  when: "['kubemasters', 'kubenodes', 'etcd'] is subset('groups')"
   tags: [add_all_hosts_from_inventory]
 - name: Create necessary dirs
   file:
