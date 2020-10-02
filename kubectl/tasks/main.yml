@@ -1,14 +1,5 @@
 ---
-- name: Install kubectl binary
-  get_url:
-    url: "{{ kubectl_url }}"
-    dest: /usr/local/bin/kubectl
-    owner: root
-    group: root
-    mode: "0755"
-  tags: [install_kubectl]
-- name: Set autocompletion up
-  shell: kubectl completion bash > /etc/bash_completion.d/kubectl
-  args:
-    creates: /etc/bash_completion.d/kubectl
-  tags: [install_kubectl]
+- name: Set up kubectl
+  import_tasks: kubectl.yml
+- name: Set up Helm
+  import_tasks: helm.yml
