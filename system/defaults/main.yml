@@ -2,6 +2,7 @@
 basic_packages:
   - apt-transport-https
   - aptitude
+  - conntrack
   - dirmngr
   - git
   - python3-minimal
