@@ -1,0 +1,26 @@
+---
+- name: Create temp dir for helm
+  file:
+    path: /tmp/helm
+    state: directory
+- name: Download Helm archive
+  unarchive:
+    src: "{{ helm_url }}"
+    dest: /tmp/helm
+    remote_src: yes
+- name: Copy helm binary to PATH
+  copy:
+    src: /tmp/helm/linux-amd64/helm
+    dest: /usr/local/bin/helm
+    owner: root
+    group: root
+    mode: "0755"
+    remote_src: yes
+- name: Delete temp directory
+  file:
+    path: /tmp/helm
+    state: absent
+- name: Set autocompletion for helm
+  shell: helm completion bash > /etc/bash_completion.d/helm
+  args:
+    creates: /etc/bash_completion.d/helm

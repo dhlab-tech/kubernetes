@@ -1,20 +1,43 @@
 ---
-- name: Update kubeconfig for admin context
+- name: Ensure kubeconfig dir
+  file:
+    path: "{{ kubeconfig_dir }}"
+    state: directory
   become: no
+- name: Copy admin and CA certs
+  copy:
+    src: "{{ certdir }}/{{ item }}"
+    dest: "{{ kubeconfig_dir }}"
+    mode: "0600"
+  with_items:
+    - ca.pem
+    - admin.pem
+    - admin-key.pem
+  tags: admin_update_kubeconfig
+  become: no
+- name: Update kubeconfig for admin context
   shell: |
-        kubectl config set-cluster {{ cluster_name }} \
-            --certificate-authority={{ certdir }}/ca.pem \
-            --embed-certs=true \
-            --server=https://{{ kube_apiserver_ip }}:{{ kube_master_port }} \
-            --kubeconfig={{ kubeconfig_path }}
-        kubectl config set-credentials {{ username }} \
-            --client-certificate={{ certdir }}/admin.pem \
-            --client-key={{ certdir }}/admin-key.pem \
-            --embed-certs=true \
-            --kubeconfig={{ kubeconfig_path }}
-        kubectl config set-context {{ context }} \
-            --cluster={{ cluster_name }} \
-            --user={{ username }} \
-            --kubeconfig={{ kubeconfig_path }}
-        kubectl config use-context {{ context }} --kubeconfig={{ kubeconfig_path }}
-  tags: ["admin_update_kubeconfig"]
+    kubectl config set-cluster {{ cluster_name }} \
+        --certificate-authority={{ kubeconfig_dir }}/ca.pem \
+        --embed-certs=true \
+        --server=https://{{ kube_apiserver_ip }}:{{ kube_master_port }} \
+        --kubeconfig={{ kubeconfig_path }}
+    kubectl config set-credentials admin \
+        --client-certificate={{ kubeconfig_dir }}/admin.pem \
+        --client-key={{ kubeconfig_dir }}/admin-key.pem \
+        --embed-certs=true \
+        --kubeconfig={{ kubeconfig_path }}
+    kubectl config set-context {{ context }} \
+        --cluster={{ cluster_name }} \
+        --user=admin \
+        --kubeconfig={{ kubeconfig_path }}
+    kubectl config use-context {{ context }} \
+      --kubeconfig={{ kubeconfig_path }}
+  tags: admin_update_kubeconfig
+  become: no
+- name: Install k8s python stuff
+  pip:
+    name: "{{ k8s_pip }}"
+    virtualenv: "/root/.pyk8s"
+    virtualenv_python: "/usr/bin/python3"
+  become: no
